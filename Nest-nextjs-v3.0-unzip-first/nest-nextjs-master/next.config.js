@@ -8,9 +8,13 @@
         return {
           fallback: [
             {
-              source: '/pp:id/:slug',
-              destination: '/pp/:id/:slug'
-          }
+              source: '/z:id/:slug',
+              destination: '/z/:id/:slug'
+            },
+            {
+              source: '/c:id/:slug',
+              destination: '/c/:id/:slug'
+            }
           ]
         }
       }
