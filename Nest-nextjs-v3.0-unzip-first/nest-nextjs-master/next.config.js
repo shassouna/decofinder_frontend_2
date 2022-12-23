@@ -7,14 +7,26 @@
       async rewrites() {
         return {
           fallback: [
+            // product
             {
               source: '/z:id/:slug',
               destination: '/z/:id/:slug'
             },
+            // category
             {
               source: '/c:id/:slug',
               destination: '/c/:id/:slug'
-            }
+            },
+            // exposant
+            {
+              source: '/pp:id/:slug',
+              destination: '/pp/:id/:slug'
+            },
+            // typeprod
+            {
+              source: '/p:id/:slug',
+              destination: '/p/:id/:slug'
+            },
           ]
         }
       }

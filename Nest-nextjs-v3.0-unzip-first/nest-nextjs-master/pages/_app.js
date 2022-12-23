@@ -16,6 +16,7 @@ import "../public/assets/css/main.css";
 import store from "../redux/store";
 import Preloader from "./../components/elements/Preloader";
 import { appWithTranslation } from 'next-i18next';
+import GlobalFunctions from "./../components/elements2/GlobalFunctions";
 
 
 function MyApp({ Component, pageProps }) {
@@ -36,7 +37,7 @@ function MyApp({ Component, pageProps }) {
                 <Provider store={store}>
                     <StorageWrapper>
                        
-                            <Component {...pageProps} />
+                            <Component {...pageProps} GlobalFunctions={GlobalFunctions}/>
                             <ToastContainer />
                     </StorageWrapper>
                 </Provider>
