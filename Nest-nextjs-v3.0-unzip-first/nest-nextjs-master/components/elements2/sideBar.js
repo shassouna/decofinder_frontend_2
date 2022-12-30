@@ -1,11 +1,37 @@
 import Link from "next/link"
 import React from "react"
-import VendorFilter from "./VendorFilter"
+import Checkboxs from "./Checkboxs"
+import CheckboxsPrices from "./CheckboxsPrices"
 
-const Sidebar = ({Category, Categories_Univers_Category, Univers_Category}) => {
+
+const Sidebar = ({
+                  Category, 
+                  Categories_Univers_Category, 
+                  Univers_Category,
+                  Marques,
+                  Prices,
+                  Designers,
+                  Styles,
+                  Couleurs,
+                  Motifs,
+                  Materiaux,
+                  handleFilter,
+                  marquesFilter,
+                  pricesFilter,
+                  designersFilter,
+                  stylesFilter,
+                  couleursFilter, 
+                  materiauxFilter, 
+                  motifsFilter
+                }) => {
+
+
+    // Functions 
+    const handleCheckBox = (id, filterKey) => {
+        handleFilter(id, filterKey)
+    }
 
     return (
-        <>
             <div className="widget-area">
 
                 {/* Categories of Univers of Category */}
@@ -17,7 +43,8 @@ const Sidebar = ({Category, Categories_Univers_Category, Univers_Category}) => {
                             <Link href={`/c${category["id"]}/${category["attributes"]["slug"]}`}><a>{category["attributes"]["LIB"]}</a></Link>
                             <span className="count">{category["attributes"]["typeprods"]["data"]
                                                      .map(e=>e["attributes"]["produits"]["data"].length)
-                                                     .reduce((a, b) => a + b, 0)}</span>
+                                                     .reduce((a, b) => a + b, 0)}
+                            </span>
                         </li>
                     ))}
                     </ul>
@@ -36,80 +63,140 @@ const Sidebar = ({Category, Categories_Univers_Category, Univers_Category}) => {
                     </ul>
                 </div>
 
-                {/* Marques */}
-                <div className="sidebar-widget price_range range mb-30">
+                {/* Designers */
+                Designers.length>0&&
+                <div className="sidebar-widget range mb-30">
+                    <div className="list-group">
+                        <div className="list-group-item mb-10 mt-10">
+                            <h5 className="section-title style-1 mb-30">
+                                Designers
+                            </h5>
+                            <Checkboxs 
+                            items={Designers}
+                            prop="DESIGNER"
+                            handleCheckBox={handleCheckBox}
+                            filterKey={designersFilter}
+                            />
+                        </div>
+                    </div>
+                </div>
+                }
+                
+                {/* Marques */
+                Marques.length>0&&
+                <div className="sidebar-widget range mb-30">
                     <div className="list-group">
                         <div className="list-group-item mb-10 mt-10">
                             <h5 className="section-title style-1 mb-30">
                                 Marques
                             </h5>
-                            <VendorFilter />
+                            <Checkboxs 
+                            items={Marques}
+                            prop="MARQUE"
+                            handleCheckBox={handleCheckBox}
+                            filterKey={marquesFilter}
+                            />
                         </div>
                     </div>
-                    <br />
                 </div>
+                }
+   
+                {/* Prices */
+                Prices.length>0&&
+                <div className="sidebar-widget range mb-30">
+                    <div className="list-group-item mb-10 mt-10">
+                        <div>
+                            <h5 className="section-title style-1 mb-30">
+                                Prices
+                            </h5>
+                            <CheckboxsPrices
+                            items={Prices}
+                            prop='TARIF_PUB'
+                            handleCheckBox={handleCheckBox}
+                            filterKey={pricesFilter}
+                            />
+                        </div>
+                    </div>
+                   </div>
+                }
 
-                <div className="sidebar-widget price_range range mb-30">
+                {/* Styles */
+                Styles.length>0&&
+                <div className="sidebar-widget range mb-30">
                     <div className="list-group">
                         <div className="list-group-item mb-10 mt-10">
                             <h5 className="section-title style-1 mb-30">
-                                New products
+                                Styles
                             </h5>
-                            <VendorFilter />
+                            <Checkboxs 
+                            items={Styles}
+                            prop="LIB"
+                            handleCheckBox={handleCheckBox}
+                            filterKey={stylesFilter}
+                            />
                         </div>
                     </div>
-                    <br />
                 </div>
+                }
 
-                <div className="sidebar-widget price_range range mb-30">
+                {/* Couleurs */ 
+                Couleurs.length>0&&
+                <div className="sidebar-widget range mb-30">
                     <div className="list-group">
                         <div className="list-group-item mb-10 mt-10">
                             <h5 className="section-title style-1 mb-30">
-                                New products
+                                Couleurs
                             </h5>
-                            <VendorFilter />
+                            <Checkboxs 
+                            items={Couleurs}
+                            prop="LIB"
+                            handleCheckBox={handleCheckBox}
+                            filterKey={couleursFilter}
+                            />
                         </div>
                     </div>
-                    <br />
                 </div>
+                }
 
-                <div className="sidebar-widget price_range range mb-30">
+                {/* Motifs */
+                Motifs.length>0&&
+                <div className="sidebar-widget range mb-30">
                     <div className="list-group">
                         <div className="list-group-item mb-10 mt-10">
                             <h5 className="section-title style-1 mb-30">
-                                New products
+                                Motifs
                             </h5>
-                            <VendorFilter />
+                            <Checkboxs 
+                            items={Motifs}
+                            prop="LIB"
+                            handleCheckBox={handleCheckBox}          
+                            filterKey={motifsFilter}
+                            />
                         </div>
                     </div>
-                    <br />
                 </div>
+                }
 
-                <div className="sidebar-widget price_range range mb-30">
+                { /* Materiaux */
+                Materiaux.length>0&&
+                <div className="sidebar-widget range mb-30">
                     <div className="list-group">
                         <div className="list-group-item mb-10 mt-10">
                             <h5 className="section-title style-1 mb-30">
-                                New products
+                                Materiaux
                             </h5>
-                            <VendorFilter />
+                            <Checkboxs 
+                            items={Materiaux}
+                            prop="LIB"
+                            handleCheckBox={handleCheckBox}
+                            filterKey={materiauxFilter}
+                            />
                         </div>
                     </div>
-                    <br />
                 </div>
+                }
 
-                <div className="sidebar-widget price_range range mb-30">
-                    <div className="list-group">
-                        <div className="list-group-item mb-10 mt-10">
-                            <h5 className="section-title style-1 mb-30">
-                                New products
-                            </h5>
-                            <VendorFilter />
-                        </div>
-                    </div>
-                    <br />
-                </div>
             </div>
-        </>
     )
 }
 

@@ -60,7 +60,7 @@ const SingleProduct = ({
                             <a>{product["attributes"]["exposant"]["data"]["attributes"]["NOM"]}</a>
                         </Link>
                     </h2>
-
+                    {product["attributes"]["typeprod"]&&product["attributes"]["typeprod"]["data"]&&
                     <div className="product-rate-cover">
                         <Link
                             href={`/p${product["attributes"]["typeprod"]["data"]["id"]}/${product["attributes"]["typeprod"]["data"]["attributes"]["slug"]}`}
@@ -70,6 +70,7 @@ const SingleProduct = ({
                             </span>
                         </Link>
                     </div>
+                    }
 
                     <div className="product-card-bottom">
                         <div className="product-price">
