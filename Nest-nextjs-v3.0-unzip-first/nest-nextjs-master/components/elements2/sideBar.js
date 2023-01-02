@@ -1,5 +1,6 @@
+// Import from Next
 import Link from "next/link"
-import React from "react"
+// Import from components
 import Checkboxs from "./Checkboxs"
 import CheckboxsPrices from "./CheckboxsPrices"
 
@@ -26,11 +27,11 @@ const Sidebar = ({
                 }) => {
 
 
-    // Functions 
+    /*---------------------------------------------------Functions begin---------------------------------------------------*/
     const handleCheckBox = (id, filterKey) => {
         handleFilter(id, filterKey)
     }
-
+    /*---------------------------------------------------Functions end---------------------------------------------------*/
     return (
             <div className="widget-area">
 
@@ -40,7 +41,10 @@ const Sidebar = ({
                     <ul>
                     {Categories_Univers_Category.map(category=>(
                         <li key={category["id"]}>
-                            <Link href={`/c${category["id"]}/${category["attributes"]["slug"]}`}><a>{category["attributes"]["LIB"]}</a></Link>
+                            <Link 
+                            href={`/c/${category["id"]}/${category["attributes"]["slug"]}`}  
+                            as={`/c${category["id"]}/${category["attributes"]["slug"]}`}                      
+                            ><a>{category["attributes"]["LIB"]}</a></Link>
                             <span className="count">{category["attributes"]["typeprods"]["data"]
                                                      .map(e=>e["attributes"]["produits"]["data"].length)
                                                      .reduce((a, b) => a + b, 0)}
@@ -56,7 +60,10 @@ const Sidebar = ({
                     <ul>
                     {Category["attributes"]["typeprods"]["data"].map(typeprod=>(
                         <li key={typeprod["id"]}>
-                            <Link href={`/p${typeprod["id"]}/${typeprod["attributes"]["slug"]}`}><a>{typeprod["attributes"]["LIB"]}</a></Link>
+                            <Link 
+                            href={`/p/${typeprod["id"]}/${typeprod["attributes"]["slug"]}`}
+                            as={`/p${typeprod["id"]}/${typeprod["attributes"]["slug"]}`}
+                            ><a>{typeprod["attributes"]["LIB"]}</a></Link>
                             <span className="count">{typeprod["attributes"]["produits"]["data"].length}</span>
                         </li>
                     ))}

@@ -1,7 +1,7 @@
 
 const GlobalFunctions = {
 
-    // Compter le nombre de produits pour un filtre x 
+    // filter products by filter 
     handleCountProductsOfEachFilter : (arr, prop) => {
     const res = []
     for (const element of arr) {
@@ -16,7 +16,7 @@ const GlobalFunctions = {
     return(res) 
     },
 
-    // Compter le nombre de produits pour le filtre prix
+    // filter products by filter price 
     handleCountProductsOfEachPrice : (arr, prop, prices) => {
     let res = []
     for (let i=0; i<prices.length-1; i++){

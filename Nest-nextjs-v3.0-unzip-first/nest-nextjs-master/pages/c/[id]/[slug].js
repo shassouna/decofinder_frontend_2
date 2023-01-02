@@ -1,5 +1,6 @@
 
 
+// Import from components
 import GlobalFunctions from "../../../components/elements2/GlobalFunctions";
 import Sidebar from "../../../components/elements2/sideBar"
 import Pagination from "../../../components/elements2/Pagination"
@@ -7,9 +8,12 @@ import Title from "../../../components/elements2/Title"
 import SingleProduct from "../../../components/elements2/SingleProduct"
 import Typeprod from "../../../components/elements2/typeprod"
 import SelectionsSlider from "../../../components/elements2/intro3"
+// Import from libraries
 import axios from "axios"
 // Import from react 
 import { useState, useEffect } from "react"
+// Import from Next
+import { useRouter } from "next/router";
 
 // Constantes
 const limit = 10
@@ -24,9 +28,10 @@ const motifsFilter = "motifs"
 
 function Category(props) {
 
-
-    /* ------------------------- States ------------------------- */
-
+    /*---------------------------------------------------Hooks begin---------------------------------------------------*/
+    // Routers
+    const router = useRouter()
+    // States
     const [currentPage, setCurrentPage] = useState (1)
 
     const [Category, setCategory] = useState(props["Category"])
@@ -47,10 +52,7 @@ function Category(props) {
 
     useEffect(()=>{
 
-        // Initialiser les nouveautées à filtrer
-        let productsFiltered = [...props["Products"]]
-
-        console.log(Prices.find(price=>price["checked"]))
+        // Get filters ids
         let filterPrices = Prices.find(price=>price["checked"])?Prices.find(price=>price["checked"])["item"]:[]
         let filterMarques = Marques.filter(marque=>marque["checked"]).map(marque=>marque["item"]["id"])
         let filterDesigners = Designers.filter(designer=>designer["checked"]).map(designer=>designer["item"]["id"])
@@ -59,6 +61,10 @@ function Category(props) {
         let filterMotifs = Motifs.filter(motif=>motif["checked"]).map(motif=>motif["item"]["id"])
         let filterMateriaux = Materiaux.filter(materiau=>materiau["checked"]).map(materiau=>materiau["item"]["id"])
 
+        // Initialize products to filter 
+        let productsFiltered = [...props["Products"]]
+
+        // Filter products
         if(filterPrices.length>0){
             productsFiltered=productsFiltered.filter(product => parseFloat(product['attributes']['TARIF_PUB'])>=filterPrices[0] && parseFloat(product['attributes']['TARIF_PUB'])<=filterPrices[1])
         }
@@ -103,23 +109,41 @@ function Category(props) {
             })
         }  
 
-        // Mettre à jour de la liste des nouveautés à afficher
+        // Update products state
         setProducts([...productsFiltered])
 
+        // Router management
+        if(productsFiltered.length != props["Products"]){
+
+            const obj ={...router.query}
+            
+            obj['prix']=filterPrices
+            obj['couleur']=filterCouleurs
+            obj['motif']=filterMotifs
+            obj['style']=filterStyles
+            obj['materiau']=filterMateriaux
+            obj['designer']=filterDesigners
+            obj['marque']=filterMarques
+
+            router.push(
+                {query: {...obj}},
+                null, 
+                {shallow : true}
+            )
+        }
+
     },[Couleurs, Motifs, Styles, Designers, Marques, Materiaux, Prices])
+    /*---------------------------------------------------Hooks end---------------------------------------------------*/
 
-    /* ------------------------- Functions ------------------------- */
-
+    /*---------------------------------------------------Functions begin---------------------------------------------------*/
     // Show next page (pagination)
     const next = () => {
         setCurrentPage((currentPage )=>currentPage + 1)   
     }
-
-    // Show next page (pagination)
+    // Show previous page (pagination)
     const prev = () => {
         setCurrentPage((currentPage)=>currentPage - 1)
     }
-
     // Show selected page (pagination)
     const handleActive = (item) => {
         setCurrentPage(item)
@@ -164,7 +188,9 @@ function Category(props) {
             itemsLocal.find(item=>item["id"]==id)["checked"]=!itemsLocal.find(item=>item["id"]==id)["checked"]
             setPrices([...itemsLocal])
         }
+
     }
+    /*---------------------------------------------------Functions end---------------------------------------------------*/
 
     return (
             <section className="mt-50 mb-50">
