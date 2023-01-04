@@ -24,10 +24,9 @@ const CheckboxsPrices = (props) => {
             items&&
             <div className="custome-checkbox">
                 {items.map((item, index) => (                
-                    <div className="checkbox-container" style={{display:"flex", justifyContent:"space-between"}}>     
+                    <div className="checkbox-container" style={{display:"flex", justifyContent:"space-between"}} key={item["id"]}>     
                         <div className="checkbox-label">
                             <input
-                                key={item["id"]}
                                 type="checkbox"
                                 className="form-check-input"
                                 name={item["item"].toString()}

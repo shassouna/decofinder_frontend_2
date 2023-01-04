@@ -22,9 +22,9 @@ const Checkboxs = (props) => {
 
     return (
             <div className="custome-checkbox">
-                {items.map((item) => {
+                {items.map((item, index) => {
                     return(
-                    <div key={item["item"]["id"]+item["checked"]+Math.random()} className="checkbox-container" style={{display:"flex", justifyContent:"space-between"}}>
+                    <div key={index} className="checkbox-container" style={{display:"flex", justifyContent:"space-between"}}>
                         <div>
                             <input
                                 type="checkbox"

@@ -42,13 +42,14 @@ const Sidebar = ({
                     {Categories_Univers_Category.map(category=>(
                         <li key={category["id"]}>
                             <Link 
-                            href={`/c/${category["id"]}/${category["attributes"]["slug"]}`}  
-                            as={`/c${category["id"]}/${category["attributes"]["slug"]}`}                      
+                            href={`/c${category["id"]}/${category["attributes"]["slug"]}`}  
+                            as={`/c/${category["id"]}/${category["attributes"]["slug"]}`}                      
                             ><a>{category["attributes"]["LIB"]}</a></Link>
                             <span className="count">{category["attributes"]["typeprods"]["data"]
                                                      .map(e=>e["attributes"]["produits"]["data"].length)
-                                                     .reduce((a, b) => a + b, 0)}
+                                                     .reduce((a, b) => a + b, category["attributes"]["produits"]["data"].length)}
                             </span>
+                            {console.log(category["attributes"])}
                         </li>
                     ))}
                     </ul>

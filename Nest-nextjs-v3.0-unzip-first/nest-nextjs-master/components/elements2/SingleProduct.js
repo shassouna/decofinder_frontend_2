@@ -69,6 +69,7 @@ const SingleProduct = ({
                                 {product["attributes"]["typeprod"]["data"]["attributes"]["LIB"]}
                             </span>
                         </Link>
+                        <p>{product["attributes"]["TITRE"]}</p>
                     </div>
                     }
 

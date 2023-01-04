@@ -49,62 +49,54 @@ function Category(props) {
     const [Motifs, setMotifs] = useState(props["motifs"])
     const [Materiaux, setMateriaux] = useState(props["materiaux"])
 
+    const [executeOthersUseEffect, setExecuteOthersUseEffect] = useState(false)
 
     useEffect(()=>{
-
-        // Get filters ids
-        let filterPrices = Prices.find(price=>price["checked"])?Prices.find(price=>price["checked"])["item"]:[]
-        let filterMarques = Marques.filter(marque=>marque["checked"]).map(marque=>marque["item"]["id"])
-        let filterDesigners = Designers.filter(designer=>designer["checked"]).map(designer=>designer["item"]["id"])
-        let filterStyles = Styles.filter(style=>style["checked"]).map(style=>style["item"]["id"])
-        let filterCouleurs = Couleurs.filter(couleur=>couleur["checked"]).map(couleur=>couleur["item"]["id"])
-        let filterMotifs = Motifs.filter(motif=>motif["checked"]).map(motif=>motif["item"]["id"])
-        let filterMateriaux = Materiaux.filter(materiau=>materiau["checked"]).map(materiau=>materiau["item"]["id"])
 
         // Initialize products to filter 
         let productsFiltered = [...props["Products"]]
 
         // Filter products
-        if(filterPrices.length>0){
-            productsFiltered=productsFiltered.filter(product => parseFloat(product['attributes']['TARIF_PUB'])>=filterPrices[0] && parseFloat(product['attributes']['TARIF_PUB'])<=filterPrices[1])
+        if(props["filterPrices"].length>0){
+            productsFiltered=productsFiltered.filter(product => parseFloat(product['attributes']['TARIF_PUB'])>=props["filterPrices"][0] && parseFloat(product['attributes']['TARIF_PUB'])<=props["filterPrices"][1])
         }
 
-        if(filterMarques.length>0){
-            productsFiltered=productsFiltered.filter(product=>filterMarques.includes(product["id"]))
+        if(props["filterMarques"].length>0){
+            productsFiltered=productsFiltered.filter(product=>props["filterMarques"].includes(product["id"]))
         }
 
-        if(filterDesigners.length>0){
-            productsFiltered=productsFiltered.filter(product=>filterDesigners.includes(product["id"]))
+        if(props["filterDesigners"].length>0){
+            productsFiltered=productsFiltered.filter(product=>props["filterDesigners"].includes(product["id"]))
         }
 
-        if(filterStyles.length>0){
+        if(props["filterStyles"].length>0){
             productsFiltered=productsFiltered.filter(product=>{
                 if(product["attributes"]["style"]&&product["attributes"]["style"]["data"]){
-                    return filterStyles.includes(product["attributes"]["style"]["data"]["id"])
+                    return props["filterStyles"].includes(product["attributes"]["style"]["data"]["id"])
                 }
             })
         }
 
-        if(filterCouleurs.length>0){
+        if(props["filterCouleurs"].length>0){
             productsFiltered=productsFiltered.filter(product=>{
                 if(product["attributes"]["couleur"]&&product["attributes"]["couleur"]["data"]){
-                    return filterCouleurs.includes(product["attributes"]["couleur"]["data"]["id"])
+                    return props["filterCouleurs"].includes(product["attributes"]["couleur"]["data"]["id"])
                 }
             })
         }
 
-        if(filterMotifs.length>0){
+        if(props["filterMotifs"].length>0){
             productsFiltered=productsFiltered.filter(product=>{
                 if(product["attributes"]["motif"]&&product["attributes"]["motif"]["data"]){
-                    return filterMotifs.includes(product["attributes"]["motif"]["data"]["id"])
+                    return props["filterMotifs"].includes(product["attributes"]["motif"]["data"]["id"])
                 }
             })
         }   
         
-        if(filterMateriaux.length>0){
+        if(props["filterMateriaux"].length>0){
             productsFiltered=productsFiltered.filter(product=>{
                 if(product["attributes"]["materiau"]&&product["attributes"]["materiau"]["data"]){
-                    return filterMateriaux.includes(product["attributes"]["materiau"]["data"]["id"])
+                    return props["filterMateriaux"].includes(product["attributes"]["materiau"]["data"]["id"])
                 }
             })
         }  
@@ -117,19 +109,145 @@ function Category(props) {
 
             const obj ={...router.query}
             
-            obj['prix']=filterPrices
-            obj['couleur']=filterCouleurs
-            obj['motif']=filterMotifs
-            obj['style']=filterStyles
-            obj['materiau']=filterMateriaux
-            obj['designer']=filterDesigners
-            obj['marque']=filterMarques
+            obj['prix']=props["filterPrices"]
+            obj['couleur']=props["filterCouleurs"]
+            obj['motif']=props["filterMotifs"]
+            obj['style']=props["filterStyles"]
+            obj['materiau']=props["filterMateriaux"]
+            obj['designer']=props["filterDesigners"]
+            obj['marque']=props["filterMarques"]
 
             router.push(
                 {query: {...obj}},
                 null, 
                 {shallow : true}
             )
+        }
+        
+        // initialize sidebar checkboxs 
+        Prices.forEach(item => {
+            if(props["filterPrices"][0]==item["item"][0]&&props["filterPrices"][1]==item["item"][1]){
+                item["checked"]=true
+            }
+        })
+        Marques.forEach(item => {
+            if(props["filterMarques"].includes(item["item"]["id"])){
+                item["checked"]=true
+            }
+        })
+        Designers.forEach(item => {
+            if(props["filterDesigners"].includes(item["item"]["id"])){
+                item["checked"]=true
+            }
+        })
+        Styles.forEach(item => {
+            if(props["filterStyles"].includes(item["item"]["id"])){
+                item["checked"]=true
+            }
+        })
+        Couleurs.forEach(item => {
+            if(props["filterCouleurs"].includes(item["item"]["id"])){
+                item["checked"]=true
+            }
+        })
+        Motifs.forEach(item => {
+            if(props["filterMotifs"].includes(item["item"]["id"])){
+                item["checked"]=true
+            }
+        })
+        Materiaux.forEach(item => {
+            if(props["filterMateriaux"].includes(item["item"]["id"])){
+                item["checked"]=true
+            }
+        })
+
+        // autorize other effects 
+        setExecuteOthersUseEffect(true)
+
+    },[])
+
+    useEffect(()=>{
+
+        if (executeOthersUseEffect){
+            // Get filters ids
+            let filterPrices = Prices.find(price=>price["checked"])?Prices.find(price=>price["checked"])["item"]:[]
+            let filterMarques = Marques.filter(marque=>marque["checked"]).map(marque=>marque["item"]["id"])
+            let filterDesigners = Designers.filter(designer=>designer["checked"]).map(designer=>designer["item"]["id"])
+            let filterStyles = Styles.filter(style=>style["checked"]).map(style=>style["item"]["id"])
+            let filterCouleurs = Couleurs.filter(couleur=>couleur["checked"]).map(couleur=>couleur["item"]["id"])
+            let filterMotifs = Motifs.filter(motif=>motif["checked"]).map(motif=>motif["item"]["id"])
+            let filterMateriaux = Materiaux.filter(materiau=>materiau["checked"]).map(materiau=>materiau["item"]["id"])
+
+            // Initialize products to filter 
+            let productsFiltered = [...props["Products"]]
+
+            // Filter products
+            if(filterPrices.length>0){
+                productsFiltered=productsFiltered.filter(product => parseFloat(product['attributes']['TARIF_PUB'])>=filterPrices[0] && parseFloat(product['attributes']['TARIF_PUB'])<=filterPrices[1])
+            }
+
+            if(filterMarques.length>0){
+                productsFiltered=productsFiltered.filter(product=>filterMarques.includes(product["id"]))
+            }
+
+            if(filterDesigners.length>0){
+                productsFiltered=productsFiltered.filter(product=>filterDesigners.includes(product["id"]))
+            }
+
+            if(filterStyles.length>0){
+                productsFiltered=productsFiltered.filter(product=>{
+                    if(product["attributes"]["style"]&&product["attributes"]["style"]["data"]){
+                        return filterStyles.includes(product["attributes"]["style"]["data"]["id"])
+                    }
+                })
+            }
+
+            if(filterCouleurs.length>0){
+                productsFiltered=productsFiltered.filter(product=>{
+                    if(product["attributes"]["couleur"]&&product["attributes"]["couleur"]["data"]){
+                        return filterCouleurs.includes(product["attributes"]["couleur"]["data"]["id"])
+                    }
+                })
+            }
+
+            if(filterMotifs.length>0){
+                productsFiltered=productsFiltered.filter(product=>{
+                    if(product["attributes"]["motif"]&&product["attributes"]["motif"]["data"]){
+                        return filterMotifs.includes(product["attributes"]["motif"]["data"]["id"])
+                    }
+                })
+            }   
+            
+            if(filterMateriaux.length>0){
+                productsFiltered=productsFiltered.filter(product=>{
+                    if(product["attributes"]["materiau"]&&product["attributes"]["materiau"]["data"]){
+                        return filterMateriaux.includes(product["attributes"]["materiau"]["data"]["id"])
+                    }
+                })
+            }  
+
+            // Update products state
+            setProducts([...productsFiltered])
+
+            // Router management
+            if(productsFiltered.length != props["Products"]){
+
+                const obj ={...router.query}
+                
+                obj['prix']=filterPrices
+                obj['couleur']=filterCouleurs
+                obj['motif']=filterMotifs
+                obj['style']=filterStyles
+                obj['materiau']=filterMateriaux
+                obj['designer']=filterDesigners
+                obj['marque']=filterMarques
+
+                router.push(
+                    {query: {...obj}},
+                    null, 
+                    {shallow : true}
+                )
+            }
         }
 
     },[Couleurs, Motifs, Styles, Designers, Marques, Materiaux, Prices])
@@ -290,6 +408,8 @@ export default Category
 
 export async function getServerSideProps (context) {
 
+
+
     // Declarations 
     let categoryProducts = []
 
@@ -300,6 +420,16 @@ export async function getServerSideProps (context) {
     let couleurs = []
     let motifs = []
     let materiaux = []
+
+    let filterMarques = []
+    let filterPrices = []
+    let filterDesigners = []
+    let filterStyles = []
+    let filterCouleurs = []
+    let filterMotifs = []
+    let filterMateriaux = []
+    
+    let findCategory = undefined
 
     // Import qs
     const qs = require("qs")
@@ -316,7 +446,6 @@ export async function getServerSideProps (context) {
             "typeprods.produits.couleur", 
             "typeprods.produits.motif", 
             "typeprods.produits.materiau", 
-            "typeprods.produits.style", 
             // products of category
             "produits.exposant",
             "produits.typeprod", 
@@ -327,15 +456,42 @@ export async function getServerSideProps (context) {
             "produits.materiau",
             // products of univers
             "univer.categories.typeprods.produits",
+            "univer.categories.produits", 
             // typeprods
             "typeprods.image",
+            // internationalization
+            // products of typeprods
+            "localizations.typeprods.produits.exposant",
+            "localizations.typeprods.produits.typeprod",
+            "localizations.typeprods.produits.images",
+            "localizations.typeprods.produits.style",
+            "localizations.typeprods.produits.couleur",
+            "localizations.typeprods.produits.motif",
+            "localizations.typeprods.produits.materiau",
+            // products of category
+            "localizations.produits.exposant",
+            "localizations.produits.typeprod", 
+            "localizations.produits.images",
+            "localizations.produits.style",
+            "localizations.produits.couleur",
+            "localizations.produits.motif",
+            "localizations.produits.materiau",
+            // products of univers
+            "localizations.univer.categories.typeprods.produits", 
+            "localizations.univer.categories.produits", 
+            // typeprods
+            "localizations.typeprods.image"   
         ]
       })
     const categorieRes = await axios.get(`http://localhost:1337/api/categories/${context["params"]["id"]}?${query}`)
 
+    // get localization category
+    findCategory = categorieRes["data"]["data"]["attributes"]["localizations"]["data"].find(e=>e["attributes"]["locale"]==context["locale"])
+    if(!findCategory) findCategory = categorieRes["data"]["data"]
+
     // Get all products of category 
-    categoryProducts = categoryProducts.concat(categorieRes["data"]["data"]["attributes"]["produits"]["data"])
-    categorieRes["data"]["data"]["attributes"]["typeprods"]["data"]
+    categoryProducts = categoryProducts.concat(findCategory["attributes"]["produits"]["data"])
+    findCategory["attributes"]["typeprods"]["data"]
     .map(e=>e["attributes"]["produits"]["data"])
     .forEach(tab => categoryProducts = categoryProducts.concat(tab))
 
@@ -357,13 +513,36 @@ export async function getServerSideProps (context) {
     motifs=GlobalFunctions["handleCountProductsOfEachFilter"](motifs,"LIB")
     materiaux=GlobalFunctions["handleCountProductsOfEachFilter"](materiaux,"LIB")
 
+    // Get list of filters from url 
+    if(context.query.marque){
+        filterMarques = typeof context.query.marque == 'string' ? [parseInt(context.query.marque)] : context.query.marque.map(element=>parseInt(element))
+    }
+    if(context.query.designer){
+        filterDesigners = typeof context.query.designer == 'string' ? [parseInt(context.query.designer)] : context.query.designer.map(element=>parseInt(element))
+    }
+    if(context.query.prix){
+        filterPrices = typeof context.query.prix == 'string' ? [parseInt(context.query.prix)] : context.query.prix.map(element=>parseInt(element))
+    }
+    if(context.query.style){
+        filterStyles = typeof context.query.style == 'string' ? [parseInt(context.query.style)] : context.query.style.map(element=>parseInt(element))
+    }
+    if(context.query.couleur){
+        filterCouleurs = typeof context.query.couleur == 'string' ? [parseInt(context.query.couleur)] : context.query.couleur.map(element=>parseInt(element))
+    }
+    if(context.query.motif){
+        filterMotifs = typeof context.query.motif == 'string' ? [parseInt(context.query.motif)] : context.query.motif.map(element=>parseInt(element))
+    }
+    if(context.query.materiau){
+        filterMateriaux = typeof context.query.materiau == 'string' ? [parseInt(context.query.materiau)] : context.query.materiau.map(element=>parseInt(element))
+    }
+
     return {
         props: {
-            Category : categorieRes["data"]["data"],
-            Typeprods : categorieRes["data"]["data"]["attributes"]["typeprods"]["data"],
+            Category : findCategory,
+            Typeprods : findCategory["attributes"]["typeprods"]["data"],
             Products : categoryProducts,
-            Univers_Category : categorieRes["data"]["data"]["attributes"]["univer"]["data"],
-            Categories_Univers_Category : categorieRes["data"]["data"]["attributes"]["univer"]["data"]["attributes"]["categories"]["data"],
+            Univers_Category : findCategory["attributes"]["univer"]["data"],
+            Categories_Univers_Category : findCategory["attributes"]["univer"]["data"]["attributes"]["categories"]["data"],
             marques : marques,
             prices : prices,
             designers : designers,
@@ -371,6 +550,13 @@ export async function getServerSideProps (context) {
             couleurs : couleurs,
             motifs : motifs,
             materiaux : materiaux,
+            filterMarques : filterMarques,
+            filterDesigners : filterDesigners,
+            filterPrices : filterPrices,
+            filterStyles : filterStyles,
+            filterCouleurs : filterCouleurs,
+            filterMotifs : filterMotifs,
+            filterMateriaux : filterMateriaux
         }
     }
 }
