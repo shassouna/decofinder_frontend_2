@@ -23,7 +23,8 @@ const Sidebar = ({
                   stylesFilter,
                   couleursFilter, 
                   materiauxFilter, 
-                  motifsFilter
+                  motifsFilter,
+                  translate
                 }) => {
 
 
@@ -36,8 +37,10 @@ const Sidebar = ({
             <div className="widget-area">
 
                 {/* Categories of Univers of Category */}
+                {
+                Univers_Category&&
                 <div className="sidebar-widget widget-category-2 mb-50">
-                    <h5 className="section-title style-1 mb-30">A voir aussi dans {Univers_Category["attributes"]["LIB"]}</h5>
+                    <h5 className="section-title style-1 mb-30">{translate("A voir aussi dans") + " " + Univers_Category["attributes"]["LIB"]}</h5>
                     <ul>
                     {Categories_Univers_Category.map(category=>(
                         <li key={category["id"]}>
@@ -49,15 +52,17 @@ const Sidebar = ({
                                                      .map(e=>e["attributes"]["produits"]["data"].length)
                                                      .reduce((a, b) => a + b, category["attributes"]["produits"]["data"].length)}
                             </span>
-                            {console.log(category["attributes"])}
                         </li>
                     ))}
                     </ul>
                 </div>
+                }
 
                 {/* Typeprods of Category */}
+                {
+                Category&&
                 <div className="sidebar-widget widget-category-2 mb-50">
-                    <h5 className="section-title style-1 mb-30">Dans la categorie : {Category["attributes"]["LIB"]}</h5>
+                    <h5 className="section-title style-1 mb-30">{translate("Dans la categorie") + " : " + Category["attributes"]["LIB"]}</h5>
                     <ul>
                     {Category["attributes"]["typeprods"]["data"].map(typeprod=>(
                         <li key={typeprod["id"]}>
@@ -70,6 +75,7 @@ const Sidebar = ({
                     ))}
                     </ul>
                 </div>
+                }
 
                 {/* Designers */
                 Designers.length>0&&
@@ -77,7 +83,7 @@ const Sidebar = ({
                     <div className="list-group">
                         <div className="list-group-item mb-10 mt-10">
                             <h5 className="section-title style-1 mb-30">
-                                Designers
+                                {translate("Designers")}
                             </h5>
                             <Checkboxs 
                             items={Designers}
@@ -96,7 +102,7 @@ const Sidebar = ({
                     <div className="list-group">
                         <div className="list-group-item mb-10 mt-10">
                             <h5 className="section-title style-1 mb-30">
-                                Marques
+                                {translate("Marques")}
                             </h5>
                             <Checkboxs 
                             items={Marques}
@@ -115,7 +121,7 @@ const Sidebar = ({
                     <div className="list-group-item mb-10 mt-10">
                         <div>
                             <h5 className="section-title style-1 mb-30">
-                                Prices
+                               {translate("Prix")}
                             </h5>
                             <CheckboxsPrices
                             items={Prices}
@@ -134,7 +140,7 @@ const Sidebar = ({
                     <div className="list-group">
                         <div className="list-group-item mb-10 mt-10">
                             <h5 className="section-title style-1 mb-30">
-                                Styles
+                                {translate("Styles")}
                             </h5>
                             <Checkboxs 
                             items={Styles}
@@ -153,7 +159,7 @@ const Sidebar = ({
                     <div className="list-group">
                         <div className="list-group-item mb-10 mt-10">
                             <h5 className="section-title style-1 mb-30">
-                                Couleurs
+                                {translate("Couleurs")}
                             </h5>
                             <Checkboxs 
                             items={Couleurs}
@@ -172,7 +178,7 @@ const Sidebar = ({
                     <div className="list-group">
                         <div className="list-group-item mb-10 mt-10">
                             <h5 className="section-title style-1 mb-30">
-                                Motifs
+                                {translate("Motifs")}
                             </h5>
                             <Checkboxs 
                             items={Motifs}
@@ -191,7 +197,7 @@ const Sidebar = ({
                     <div className="list-group">
                         <div className="list-group-item mb-10 mt-10">
                             <h5 className="section-title style-1 mb-30">
-                                Materiaux
+                                {translate("Materiaux")}
                             </h5>
                             <Checkboxs 
                             items={Materiaux}

@@ -13,7 +13,9 @@ import axios from "axios"
 // Import from react 
 import { useState, useEffect } from "react"
 // Import from Next
-import { useRouter } from "next/router";
+import { useRouter } from "next/router"
+import { useTranslation } from "next-i18next"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 
 // Constantes
 const limit = 10
@@ -31,8 +33,12 @@ function Category(props) {
     /*---------------------------------------------------Hooks begin---------------------------------------------------*/
     // Routers
     const router = useRouter()
+
+    // Translations
+    const {t : translate} = useTranslation("category")
+
     // States
-    const [currentPage, setCurrentPage] = useState (1)
+    const [currentPage, setCurrentPage] = useState(1)
 
     const [Category, setCategory] = useState(props["Category"])
     const [Products, setProducts] = useState(props["Products"])
@@ -53,12 +59,49 @@ function Category(props) {
 
     useEffect(()=>{
 
+        // initialize sidebar checkboxs 
+        Prices.forEach(item => {
+            if(props["filterPrices"][0]==item["item"][0]&&props["filterPrices"][1]==item["item"][1]){
+                item["checked"]=true
+            }
+        })
+        Marques.forEach(item => {
+            if(props["filterMarques"].includes(item["item"]["id"])){
+                item["checked"]=true
+            }
+        })
+        Designers.forEach(item => {
+            if(props["filterDesigners"].includes(item["item"]["id"])){
+                item["checked"]=true
+            }
+        })
+        Styles.forEach(item => {
+            if(props["filterStyles"].includes(item["item"]["id"])){
+                item["checked"]=true
+            }
+        })
+        Couleurs.forEach(item => {
+            if(props["filterCouleurs"].includes(item["item"]["id"])){
+                item["checked"]=true
+            }
+        })
+        Motifs.forEach(item => {
+            if(props["filterMotifs"].includes(item["item"]["id"])){
+                item["checked"]=true
+            }
+        })
+        Materiaux.forEach(item => {
+            if(props["filterMateriaux"].includes(item["item"]["id"])){
+                item["checked"]=true
+            }
+        })
+
         // Initialize products to filter 
         let productsFiltered = [...props["Products"]]
 
         // Filter products
         if(props["filterPrices"].length>0){
-            productsFiltered=productsFiltered.filter(product => parseFloat(product['attributes']['TARIF_PUB'])>=props["filterPrices"][0] && parseFloat(product['attributes']['TARIF_PUB'])<=props["filterPrices"][1])
+            productsFiltered=productsFiltered.filter(product => parseFloat(product["attributes"]["TARIF_PUB"])>=props["filterPrices"][0] && parseFloat(product["attributes"]["TARIF_PUB"])<=props["filterPrices"][1])
         }
 
         if(props["filterMarques"].length>0){
@@ -109,57 +152,25 @@ function Category(props) {
 
             const obj ={...router.query}
             
-            obj['prix']=props["filterPrices"]
-            obj['couleur']=props["filterCouleurs"]
-            obj['motif']=props["filterMotifs"]
-            obj['style']=props["filterStyles"]
-            obj['materiau']=props["filterMateriaux"]
-            obj['designer']=props["filterDesigners"]
-            obj['marque']=props["filterMarques"]
+            obj["prix"]=props["filterPrices"]
+            obj["couleur"]=props["filterCouleurs"]
+            obj["motif"]=props["filterMotifs"]
+            obj["style"]=props["filterStyles"]
+            obj["materiau"]=props["filterMateriaux"]
+            obj["designer"]=props["filterDesigners"]
+            obj["marque"]=props["filterMarques"]
 
-            router.push(
-                {query: {...obj}},
-                null, 
-                {shallow : true}
+            delete obj["id"]
+            delete obj["slug"]
+
+            router.push({
+                pathname: `/c${router.query["id"]}/${router.query["slug"]}`,
+                query: {...obj}
+              }, 
+              undefined, { shallow: true }
             )
-        }
-        
-        // initialize sidebar checkboxs 
-        Prices.forEach(item => {
-            if(props["filterPrices"][0]==item["item"][0]&&props["filterPrices"][1]==item["item"][1]){
-                item["checked"]=true
-            }
-        })
-        Marques.forEach(item => {
-            if(props["filterMarques"].includes(item["item"]["id"])){
-                item["checked"]=true
-            }
-        })
-        Designers.forEach(item => {
-            if(props["filterDesigners"].includes(item["item"]["id"])){
-                item["checked"]=true
-            }
-        })
-        Styles.forEach(item => {
-            if(props["filterStyles"].includes(item["item"]["id"])){
-                item["checked"]=true
-            }
-        })
-        Couleurs.forEach(item => {
-            if(props["filterCouleurs"].includes(item["item"]["id"])){
-                item["checked"]=true
-            }
-        })
-        Motifs.forEach(item => {
-            if(props["filterMotifs"].includes(item["item"]["id"])){
-                item["checked"]=true
-            }
-        })
-        Materiaux.forEach(item => {
-            if(props["filterMateriaux"].includes(item["item"]["id"])){
-                item["checked"]=true
-            }
-        })
+
+        }        
 
         // autorize other effects 
         setExecuteOthersUseEffect(true)
@@ -183,7 +194,7 @@ function Category(props) {
 
             // Filter products
             if(filterPrices.length>0){
-                productsFiltered=productsFiltered.filter(product => parseFloat(product['attributes']['TARIF_PUB'])>=filterPrices[0] && parseFloat(product['attributes']['TARIF_PUB'])<=filterPrices[1])
+                productsFiltered=productsFiltered.filter(product => parseFloat(product["attributes"]["TARIF_PUB"])>=filterPrices[0] && parseFloat(product["attributes"]["TARIF_PUB"])<=filterPrices[1])
             }
 
             if(filterMarques.length>0){
@@ -231,21 +242,25 @@ function Category(props) {
 
             // Router management
             if(productsFiltered.length != props["Products"]){
-
+                
                 const obj ={...router.query}
                 
-                obj['prix']=filterPrices
-                obj['couleur']=filterCouleurs
-                obj['motif']=filterMotifs
-                obj['style']=filterStyles
-                obj['materiau']=filterMateriaux
-                obj['designer']=filterDesigners
-                obj['marque']=filterMarques
+                obj["prix"]=filterPrices
+                obj["couleur"]=filterCouleurs
+                obj["motif"]=filterMotifs
+                obj["style"]=filterStyles
+                obj["materiau"]=filterMateriaux
+                obj["designer"]=filterDesigners
+                obj["marque"]=filterMarques
 
-                router.push(
-                    {query: {...obj}},
-                    null, 
-                    {shallow : true}
+                delete obj["id"]
+                delete obj["slug"]
+
+                router.push({
+                    pathname: `/c${router.query["id"]}/${router.query["slug"]}`,
+                    query: {...obj}
+                  }, 
+                  undefined, { shallow: true }
                 )
             }
         }
@@ -335,6 +350,7 @@ function Category(props) {
                             couleursFilter = {couleursFilter}
                             materiauxFilter = {materiauxFilter}
                             motifsFilter = {motifsFilter}
+                            translate = {translate}
                             />
                         </div>
                         {/* SideBar filters end */}
@@ -357,7 +373,7 @@ function Category(props) {
 
                             {/* list of selections begin */}
                             <section className="mb-100">
-                                    <h2 className="mb-30" style={{textAlign:"center"}}>Découvrez nos sélections :</h2>
+                                    <h2 className="mb-30" style={{textAlign:"center"}}>{translate("Découvrez nos sélections")} :</h2>
                                     <div className="home-slide-cover">
                                         <SelectionsSlider />
                                     </div>
@@ -368,9 +384,9 @@ function Category(props) {
                             <section>
                                 <div className="row product-grid-3">
                                     {Products.length === 0 && (
-                                        <h3>Pas de produits</h3>
+                                        <h3>{translate("Pas de produits")}</h3>
                                     )}
-                                    <h2 className="mb-30">Découvrez tous les produits de la catégorie {Category["attributes"]["LIB"]} : </h2>
+                                    <h2 className="mb-30">{translate("Découvrez tous les produits de la catégorie") + " " + Category["attributes"]["LIB"]} : </h2>
                                     {
                                     Products.slice((currentPage-1)*limit, currentPage*limit)
                                     .map((product, i) => (
@@ -407,8 +423,6 @@ function Category(props) {
 export default Category
 
 export async function getServerSideProps (context) {
-
-
 
     // Declarations 
     let categoryProducts = []
@@ -515,29 +529,30 @@ export async function getServerSideProps (context) {
 
     // Get list of filters from url 
     if(context.query.marque){
-        filterMarques = typeof context.query.marque == 'string' ? [parseInt(context.query.marque)] : context.query.marque.map(element=>parseInt(element))
+        filterMarques = typeof context.query.marque == "string" ? [parseInt(context.query.marque)] : context.query.marque.map(element=>parseInt(element))
     }
     if(context.query.designer){
-        filterDesigners = typeof context.query.designer == 'string' ? [parseInt(context.query.designer)] : context.query.designer.map(element=>parseInt(element))
+        filterDesigners = typeof context.query.designer == "string" ? [parseInt(context.query.designer)] : context.query.designer.map(element=>parseInt(element))
     }
     if(context.query.prix){
-        filterPrices = typeof context.query.prix == 'string' ? [parseInt(context.query.prix)] : context.query.prix.map(element=>parseInt(element))
+        filterPrices = typeof context.query.prix == "string" ? [parseInt(context.query.prix)] : context.query.prix.map(element=>parseInt(element))
     }
     if(context.query.style){
-        filterStyles = typeof context.query.style == 'string' ? [parseInt(context.query.style)] : context.query.style.map(element=>parseInt(element))
+        filterStyles = typeof context.query.style == "string" ? [parseInt(context.query.style)] : context.query.style.map(element=>parseInt(element))
     }
     if(context.query.couleur){
-        filterCouleurs = typeof context.query.couleur == 'string' ? [parseInt(context.query.couleur)] : context.query.couleur.map(element=>parseInt(element))
+        filterCouleurs = typeof context.query.couleur == "string" ? [parseInt(context.query.couleur)] : context.query.couleur.map(element=>parseInt(element))
     }
     if(context.query.motif){
-        filterMotifs = typeof context.query.motif == 'string' ? [parseInt(context.query.motif)] : context.query.motif.map(element=>parseInt(element))
+        filterMotifs = typeof context.query.motif == "string" ? [parseInt(context.query.motif)] : context.query.motif.map(element=>parseInt(element))
     }
     if(context.query.materiau){
-        filterMateriaux = typeof context.query.materiau == 'string' ? [parseInt(context.query.materiau)] : context.query.materiau.map(element=>parseInt(element))
+        filterMateriaux = typeof context.query.materiau == "string" ? [parseInt(context.query.materiau)] : context.query.materiau.map(element=>parseInt(element))
     }
 
     return {
         props: {
+            ...(await serverSideTranslations(context["locale"],["category"])),
             Category : findCategory,
             Typeprods : findCategory["attributes"]["typeprods"]["data"],
             Products : categoryProducts,
