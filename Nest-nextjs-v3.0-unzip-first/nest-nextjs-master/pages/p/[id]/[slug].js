@@ -1,12 +1,12 @@
 
 
 // Import from components
-import GlobalFunctions from "../../../components/elements2/GlobalFunctions";
+import GlobalFunctions from "../../../components/elements2/GlobalFunctions"
 import Sidebar from "../../../components/elements2/sideBar"
 import Pagination from "../../../components/elements2/Pagination"
 import Title from "../../../components/elements2/Title"
 import SingleProduct from "../../../components/elements2/SingleProduct"
-import Typeprod from "../../../components/elements2/typeprod"
+import TypeprodAssociated from "../../../components/elements2/Typeprod"
 import SelectionsSlider from "../../../components/elements2/intro3"
 // Import from libraries
 import axios from "axios"
@@ -42,6 +42,10 @@ function Category(props) {
 
     const [Typeprod, setTypeprod] = useState(props["Typeprod"])
     const [Products, setProducts] = useState(props["Products"])
+
+    const [Typeprods_Category_Typeprod, setTypeprods_Category_Typeprod] = useState(props["Typeprods_Category_Typeprod"])
+    const [Category_Typeprod, setCategory_Typeprod] = useState(props["Category_Typeprod"])
+    const [Univers_Typeprod, setUnivers_Typeprod] = useState(props["Univers_Typeprod"])
 
     const [Marques, setMarques] = useState(props["marques"])  
     const [Prices, setPrices] = useState(props["prices"])  
@@ -99,16 +103,13 @@ function Category(props) {
         if(props["filterPrices"].length>0){
             productsFiltered=productsFiltered.filter(product => parseFloat(product["attributes"]["TARIF_PUB"])>=props["filterPrices"][0] && parseFloat(product["attributes"]["TARIF_PUB"])<=props["filterPrices"][1])
         }
-        console.log(productsFiltered)
         if(props["filterMarques"].length>0){
             productsFiltered=productsFiltered.filter(product=>props["filterMarques"].includes(product["id"]))
         }
-        console.log(productsFiltered)
         // il faut vérifier que mle filtre c'est designer
         if(props["filterDesigners"].length>0){
             productsFiltered=productsFiltered.filter(product=>props["filterDesigners"].includes(product["id"]))
         }
-        console.log(productsFiltered)
         if(props["filterStyles"].length>0){
             productsFiltered=productsFiltered.filter(product=>{
                 if(product["attributes"]["style"]&&product["attributes"]["style"]["data"]){
@@ -116,7 +117,6 @@ function Category(props) {
                 }
             })
         }
-        console.log(productsFiltered)
         if(props["filterCouleurs"].length>0){
             productsFiltered=productsFiltered.filter(product=>{
                 if(product["attributes"]["couleur"]&&product["attributes"]["couleur"]["data"]){
@@ -124,15 +124,13 @@ function Category(props) {
                 }
             })
         }
-        console.log(productsFiltered)
         if(props["filterMotifs"].length>0){
             productsFiltered=productsFiltered.filter(product=>{
                 if(product["attributes"]["motif"]&&product["attributes"]["motif"]["data"]){
                     return props["filterMotifs"].includes(product["attributes"]["motif"]["data"]["id"])
                 }
             })
-        }   
-        console.log(productsFiltered)        
+        }           
         if(props["filterMateriaux"].length>0){
             productsFiltered=productsFiltered.filter(product=>{
                 if(product["attributes"]["materiau"]&&product["attributes"]["materiau"]["data"]){
@@ -140,7 +138,6 @@ function Category(props) {
                 }
             })
         }  
-        console.log(productsFiltered)
         // Update products state
         setProducts([...productsFiltered])
 
@@ -166,7 +163,100 @@ function Category(props) {
             undefined, { shallow: true }
           )
         } 
+
+        // autorize other effects 
+        setExecuteOthersUseEffect(true)
     },[])
+
+    useEffect(()=>{
+
+        if (executeOthersUseEffect){
+            // Get filters ids
+            let filterPrices = Prices.find(price=>price["checked"])?Prices.find(price=>price["checked"])["item"]:[]
+            let filterMarques = Marques.filter(marque=>marque["checked"]).map(marque=>marque["item"]["id"])
+            let filterDesigners = Designers.filter(designer=>designer["checked"]).map(designer=>designer["item"]["id"])
+            let filterStyles = Styles.filter(style=>style["checked"]).map(style=>style["item"]["id"])
+            let filterCouleurs = Couleurs.filter(couleur=>couleur["checked"]).map(couleur=>couleur["item"]["id"])
+            let filterMotifs = Motifs.filter(motif=>motif["checked"]).map(motif=>motif["item"]["id"])
+            let filterMateriaux = Materiaux.filter(materiau=>materiau["checked"]).map(materiau=>materiau["item"]["id"])
+
+            // Initialize products to filter 
+            let productsFiltered = [...props["Products"]]
+
+            // Filter products
+            if(filterPrices.length>0){
+                productsFiltered=productsFiltered.filter(product => parseFloat(product["attributes"]["TARIF_PUB"])>=filterPrices[0] && parseFloat(product["attributes"]["TARIF_PUB"])<=filterPrices[1])
+            }
+
+            if(filterMarques.length>0){
+                productsFiltered=productsFiltered.filter(product=>filterMarques.includes(product["id"]))
+            }
+
+            if(filterDesigners.length>0){
+                productsFiltered=productsFiltered.filter(product=>filterDesigners.includes(product["id"]))
+            }
+
+            if(filterStyles.length>0){
+                productsFiltered=productsFiltered.filter(product=>{
+                    if(product["attributes"]["style"]&&product["attributes"]["style"]["data"]){
+                        return filterStyles.includes(product["attributes"]["style"]["data"]["id"])
+                    }
+                })
+            }
+
+            if(filterCouleurs.length>0){
+                productsFiltered=productsFiltered.filter(product=>{
+                    if(product["attributes"]["couleur"]&&product["attributes"]["couleur"]["data"]){
+                        return filterCouleurs.includes(product["attributes"]["couleur"]["data"]["id"])
+                    }
+                })
+            }
+
+            if(filterMotifs.length>0){
+                productsFiltered=productsFiltered.filter(product=>{
+                    if(product["attributes"]["motif"]&&product["attributes"]["motif"]["data"]){
+                        return filterMotifs.includes(product["attributes"]["motif"]["data"]["id"])
+                    }
+                })
+            }   
+            
+            if(filterMateriaux.length>0){
+                productsFiltered=productsFiltered.filter(product=>{
+                    if(product["attributes"]["materiau"]&&product["attributes"]["materiau"]["data"]){
+                        return filterMateriaux.includes(product["attributes"]["materiau"]["data"]["id"])
+                    }
+                })
+            }  
+
+            // Update products state
+            setProducts([...productsFiltered])
+
+            // Router management
+            if(productsFiltered.length != props["Products"]){
+                
+                const obj ={...router.query}
+                
+                obj["prix"]=filterPrices
+                obj["couleur"]=filterCouleurs
+                obj["motif"]=filterMotifs
+                obj["style"]=filterStyles
+                obj["materiau"]=filterMateriaux
+                obj["designer"]=filterDesigners
+                obj["marque"]=filterMarques
+
+                delete obj["id"]
+                delete obj["slug"]
+
+                router.push({
+                    pathname: `/p${router.query["id"]}/${router.query["slug"]}`,
+                    query: {...obj}
+                  }, 
+                  undefined, { shallow: true }
+                )
+            }
+        }
+
+    },[Couleurs, Motifs, Styles, Designers, Marques, Materiaux, Prices])
     /*---------------------------------------------------Hooks end---------------------------------------------------*/
 
     /*---------------------------------------------------Functions begin---------------------------------------------------*/
@@ -227,58 +317,96 @@ function Category(props) {
     /*---------------------------------------------------Functions end---------------------------------------------------*/
 
     return (
-            <section className="mt-50 mb-50">
-              <div className="container custom">
-                  <div className="row">
-                      {/* SideBar filters begin */}
-                      <div className="col-lg-3 primary-sidebar sticky-sidebar">
-                          <Sidebar 
-                          Marques = {Marques}
-                          Prices = {Prices}
-                          Designers = {Designers}
-                          Styles = {Styles}
-                          Couleurs = {Couleurs}
-                          Motifs = {Motifs}
-                          Materiaux = {Materiaux}
-                          handleFilter = {handleFilter}
-                          marquesFilter = {marquesFilter}
-                          pricesFilter = {pricesFilter}
-                          designersFilter = {designersFilter}
-                          stylesFilter = {stylesFilter}
-                          couleursFilter = {couleursFilter}
-                          materiauxFilter = {materiauxFilter}
-                          motifsFilter = {motifsFilter}
-                          translate = {translate}
-                          />
-                      </div>
+            <div className="container custom">
+                <div className="row">
+                    {/* SideBar filters begin */}
+                        <div className="col-lg-3 primary-sidebar sticky-sidebar">
+                        <Sidebar 
+                        Typeprods_Category_Typeprod = {Typeprods_Category_Typeprod}
+                        Category_Typeprod = {Category_Typeprod}
+                        Marques = {Marques}
+                        Prices = {Prices}
+                        Designers = {Designers}
+                        Styles = {Styles}
+                        Couleurs = {Couleurs}
+                        Motifs = {Motifs}
+                        Materiaux = {Materiaux}
+                        handleFilter = {handleFilter}
+                        marquesFilter = {marquesFilter}
+                        pricesFilter = {pricesFilter}
+                        designersFilter = {designersFilter}
+                        stylesFilter = {stylesFilter}
+                        couleursFilter = {couleursFilter}
+                        materiauxFilter = {materiauxFilter}
+                        motifsFilter = {motifsFilter}
+                        translate = {translate}
+                        />
+                        </div>
                         {/* SideBar filters end */}
 
-                      <div className="col-lg-9">
-                          {/* list of products begin */}
-                          <section>
-                              <div className="row product-grid-3">
-                                  {Products.length === 0 && (
-                                      <h3>{translate("Pas de produits")}</h3>
-                                  )}
-                                  <h2 className="mb-30">{translate("Découvrez tous les produits de la catégorie") + " " + Typeprod["attributes"]["LIB"]} : </h2>
-                                  {
-                                  Products.slice((currentPage-1)*limit, currentPage*limit)
-                                  .map((product, i) => (
-                                      <div
-                                          className="col-lg-1-5 col-md-4 col-12 col-sm-6"
-                                          key={i}
-                                      >
-                                          <SingleProduct product={product} />
-                                      </div>
-                                  ))}
-                              </div>
-                          </section>
-                          {/* list of products end */}
+                        <div className="col-lg-9">
+                        {/* list of products begin */}
+                            <section>
+                                <div className="shop-product-fillter">
+                                    <Title elements={[Univers_Typeprod["attributes"]["LIB"], Category_Typeprod["attributes"]["LIB"], Typeprod["attributes"]["LIB"]]}/>
+                                </div>
+                                <div className="row product-grid-3">
+                                    {Products.length === 0 && (
+                                        <h2>{translate("Pas de produits")}</h2>
+                                    )}
+                                    <h2 className="mb-30">{translate("Découvrez tous les produits du typeproduit") + " " + Typeprod["attributes"]["LIB"]} : </h2>
+                                    {
+                                    Products.slice((currentPage-1)*limit, currentPage*limit)
+                                    .map((product, i) => (
+                                        <div
+                                            className="col-lg-1-5 col-md-4 col-12 col-sm-6"
+                                            key={i}
+                                        >
+                                            <SingleProduct product={product} />
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                            {/* list of products end */}
 
-                      </div>
-                  </div>
-              </div>
-          </section>
+                            {/* pagination begin */}
+                            <section className="pagination-area mt-15 mb-sm-5 mb-lg-0">
+                                <Pagination
+                                    getPaginationGroup={getPaginationGroup}
+                                    currentPage={currentPage}
+                                    next={next}
+                                    prev={prev}
+                                    handleActive={handleActive}
+                                />
+                            </section>
+                            {/* pagination end */}
+
+                            {/* list of selections begin */}
+                            <section className="mb-100">
+                                    <h2 className="mb-30" style={{textAlign:"center"}}>{translate("Découvrez nos sélections")} :</h2>
+                                    <div className="home-slide-cover">
+                                        <SelectionsSlider />
+                                    </div>
+                            </section>
+                            {/* list of selections end */}
+
+                        </div>
+                </div>
+                <div className="row">
+                    {/* associated typeprods begin */}
+                    <section>
+                            <div className="loop-grid">
+                            <h2 className="mb-30" style={{textAlign:"center"}}>{translate("Produits associés")}</h2>
+                                <div className="row">
+                                    {props["Typeprods_associated"].map(typeprod => (
+                                        <TypeprodAssociated key={typeprod["id"]} typeprod={typeprod}/>
+                                    ))}
+                                </div>
+                            </div>
+                    </section>
+                    {/* associated typeprods end */}
+                </div>
+            </div>
     )
 }
 
@@ -322,7 +450,10 @@ export async function getServerSideProps (context) {
           "produits.materiau", 
           // products of category
           "categorie.typeprods.produits",
-          "categorie.produits", 
+          "categorie.produits",
+          "categorie.univer",
+          // associated typeprods  
+          "typeprods.image",
           // internationalization
           // products of typeprod
           "localizations.produits.exposant",
@@ -335,10 +466,13 @@ export async function getServerSideProps (context) {
           // products of category
           "localizations.categorie.typeprods.produits", 
           "localizations.categorie.produits", 
+          "localizations.categorie.univer",
+          // associated typeprods  
+          "localizations.typeprods.image",
       ]
   })
 
-    const typeprodRes = await axios.get(`http://localhost:1337/api/typeprods/6709?${query}`)
+    const typeprodRes = await axios.get(`http://localhost:1337/api/typeprods/${context["params"]["id"]}?${query}`)
 
     // get localization typeprod
     findTypeprod = typeprodRes["data"]["data"]["attributes"]["localizations"]["data"].find(e=>e["attributes"]["locale"]==context["locale"])
@@ -384,11 +518,16 @@ export async function getServerSideProps (context) {
     if(context.query.materiau){
         filterMateriaux = typeof context.query.materiau == "string" ? [parseInt(context.query.materiau)] : context.query.materiau.map(element=>parseInt(element))
     }
+
     return {
         props: {
             ...(await serverSideTranslations(context["locale"],["typeprod"])),
             Typeprod : findTypeprod,
             Products : findTypeprod["attributes"]["produits"]["data"],
+            Typeprods_Category_Typeprod : findTypeprod["attributes"]["categorie"]["data"]["attributes"]["typeprods"]["data"],
+            Category_Typeprod : findTypeprod["attributes"]["categorie"]["data"],
+            Univers_Typeprod : findTypeprod["attributes"]["categorie"]["data"]["attributes"]["univer"]["data"],
+            Typeprods_associated : findTypeprod["attributes"]["typeprods"]["data"],
             marques : marques,
             prices : prices,
             designers : designers,

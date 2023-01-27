@@ -2,6 +2,8 @@
     "Découvrez nos sélections" : "Descubre nuestras selecciones",
     "Découvrez tous les produits de la catégorie" : "Entdecken Sie alle Produkte in der Kategorie",
     "Pas de produits" : "sin productos",
+    "Produits associés" : "Productos Asociados",
+
     "Marques" : "Marcas",
     "Designers" : "Diseñadores",
     "Prix" : "Precios",
@@ -9,6 +11,8 @@
     "Motifs" : "Patrones",
     "Materiaux" : "Materiales",
     "Couleurs" : "Colores",
+
     "Dans la categorie" : "En la categoría",
-    "A voir aussi dans" : "Para ver también en"
+    "A voir aussi dans" : "Para ver también en",
+    "Dans la même categorie" : "En la misma categoría"
 }

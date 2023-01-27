@@ -9,6 +9,12 @@ const Sidebar = ({
                   Category, 
                   Categories_Univers_Category, 
                   Univers_Category,
+                  Typeprods_Category_Typeprod,
+                  Category_Typeprod,
+                  Universs_Superunivers_Univers,
+                  Superunivers,
+                  Categories,
+                  Univers,
                   Marques,
                   Prices,
                   Designers,
@@ -27,7 +33,6 @@ const Sidebar = ({
                   translate
                 }) => {
 
-
     /*---------------------------------------------------Functions begin---------------------------------------------------*/
     const handleCheckBox = (id, filterKey) => {
         handleFilter(id, filterKey)
@@ -35,9 +40,43 @@ const Sidebar = ({
     /*---------------------------------------------------Functions end---------------------------------------------------*/
     return (
             <div className="widget-area">
-
-                {/* Categories of Univers of Category */}
+                {/* Categories of Univers case Univers */
+                Univers&&
+                <div className="sidebar-widget widget-category-2 mb-50">
+                    <h5 className="section-title style-1 mb-30">{translate("Dans l'univers") + " " + Univers["attributes"]["LIB"]}</h5>
+                    <ul>
+                    {Categories.map(category=>(
+                        <li key={category["id"]}>
+                            <Link 
+                            href={`/c${category["id"]}/${category["attributes"]["slug"]}`}  
+                            as={`/c/${category["id"]}/${category["attributes"]["slug"]}`}                      
+                            ><a>{category["attributes"]["LIB"]}</a></Link>
+                            <span className="count">{category["attributes"]["typeprods"]["data"]
+                                                     .map(e=>e["attributes"]["produits"]["data"].length)
+                                                     .reduce((a, b) => a + b, category["attributes"]["produits"]["data"].length)}
+                            </span>
+                        </li>
+                    ))}
+                    </ul>
+                </div>
+                }
                 {
+                Superunivers&&
+                <div className="sidebar-widget widget-category-2 mb-50">
+                    <h5 className="section-title style-1 mb-30">{translate("A voir aussi dans") + " " + Superunivers["attributes"]["LIB"]}</h5>
+                    <ul>
+                    {Universs_Superunivers_Univers.map(univers=>(
+                        <li key={univers["id"]}>
+                            <Link 
+                            href={`/c${univers["id"]}/${univers["attributes"]["slug"]}`}  
+                            as={`/c/${univers["id"]}/${univers["attributes"]["slug"]}`}                      
+                            ><a>{univers["attributes"]["LIB"]}</a></Link>
+                        </li>
+                    ))}
+                    </ul>
+                </div>
+                }
+                {/* Categories of Univers case Category */
                 Univers_Category&&
                 <div className="sidebar-widget widget-category-2 mb-50">
                     <h5 className="section-title style-1 mb-30">{translate("A voir aussi dans") + " " + Univers_Category["attributes"]["LIB"]}</h5>
@@ -58,8 +97,7 @@ const Sidebar = ({
                 </div>
                 }
 
-                {/* Typeprods of Category */}
-                {
+                {/* Typeprods of Category case category*/
                 Category&&
                 <div className="sidebar-widget widget-category-2 mb-50">
                     <h5 className="section-title style-1 mb-30">{translate("Dans la categorie") + " : " + Category["attributes"]["LIB"]}</h5>
@@ -76,9 +114,25 @@ const Sidebar = ({
                     </ul>
                 </div>
                 }
-
+                {/* Others typeprods of category case typeprod*/
+                Typeprods_Category_Typeprod&&
+                <div className="sidebar-widget widget-category-2 mb-50">
+                    <h5 className="section-title style-1 mb-30">{translate("Dans la même categorie") + " : " + Category_Typeprod["attributes"]["LIB"]}</h5>
+                    <ul>
+                    {Typeprods_Category_Typeprod.map(typeprod=>(
+                        <li key={typeprod["id"]}>
+                            <Link 
+                            href={`/p/${typeprod["id"]}/${typeprod["attributes"]["slug"]}`}
+                            as={`/p${typeprod["id"]}/${typeprod["attributes"]["slug"]}`}
+                            ><a>{typeprod["attributes"]["LIB"]}</a></Link>
+                            <span className="count">{typeprod["attributes"]["produits"]["data"].length}</span>
+                        </li>
+                    ))}
+                    </ul>
+                </div>                
+                }
                 {/* Designers */
-                Designers.length>0&&
+                Designers&& Designers.length>0&&
                 <div className="sidebar-widget range mb-30">
                     <div className="list-group">
                         <div className="list-group-item mb-10 mt-10">
@@ -97,7 +151,7 @@ const Sidebar = ({
                 }
                 
                 {/* Marques */
-                Marques.length>0&&
+                Marques&& Marques.length>0&&
                 <div className="sidebar-widget range mb-30">
                     <div className="list-group">
                         <div className="list-group-item mb-10 mt-10">
@@ -116,7 +170,7 @@ const Sidebar = ({
                 }
    
                 {/* Prices */
-                Prices.length>0&&
+                Prices&& Prices.length>0&&
                 <div className="sidebar-widget range mb-30">
                     <div className="list-group-item mb-10 mt-10">
                         <div>
@@ -135,7 +189,7 @@ const Sidebar = ({
                 }
 
                 {/* Styles */
-                Styles.length>0&&
+                Styles&& Styles.length>0&&
                 <div className="sidebar-widget range mb-30">
                     <div className="list-group">
                         <div className="list-group-item mb-10 mt-10">
@@ -154,7 +208,7 @@ const Sidebar = ({
                 }
 
                 {/* Couleurs */ 
-                Couleurs.length>0&&
+                Couleurs&& Couleurs.length>0&&
                 <div className="sidebar-widget range mb-30">
                     <div className="list-group">
                         <div className="list-group-item mb-10 mt-10">
@@ -173,7 +227,7 @@ const Sidebar = ({
                 }
 
                 {/* Motifs */
-                Motifs.length>0&&
+                Motifs&& Motifs.length>0&&
                 <div className="sidebar-widget range mb-30">
                     <div className="list-group">
                         <div className="list-group-item mb-10 mt-10">
@@ -192,7 +246,7 @@ const Sidebar = ({
                 }
 
                 { /* Materiaux */
-                Materiaux.length>0&&
+                Materiaux&& Materiaux.length>0&&
                 <div className="sidebar-widget range mb-30">
                     <div className="list-group">
                         <div className="list-group-item mb-10 mt-10">
@@ -209,7 +263,6 @@ const Sidebar = ({
                     </div>
                 </div>
                 }
-
             </div>
     )
 }

@@ -1,12 +1,12 @@
 
 
 // Import from components
-import GlobalFunctions from "../../../components/elements2/GlobalFunctions";
+import GlobalFunctions from "../../../components/elements2/GlobalFunctions"
 import Sidebar from "../../../components/elements2/sideBar"
 import Pagination from "../../../components/elements2/Pagination"
 import Title from "../../../components/elements2/Title"
 import SingleProduct from "../../../components/elements2/SingleProduct"
-import Typeprod from "../../../components/elements2/typeprod"
+import Typeprod from "../../../components/elements2/Typeprod"
 import SelectionsSlider from "../../../components/elements2/intro3"
 // Import from libraries
 import axios from "axios"
@@ -326,97 +326,95 @@ function Category(props) {
     /*---------------------------------------------------Functions end---------------------------------------------------*/
 
     return (
-            <section className="mt-50 mb-50">
-                <div className="container custom">
-                    <div className="row">
-                        {/* SideBar filters begin */}
-                        <div className="col-lg-3 primary-sidebar sticky-sidebar">
-                            <Sidebar 
-                            Category = {Category}
-                            Univers_Category = {Univers_Category}
-                            Categories_Univers_Category = {Categories_Univers_Category}
-                            Marques = {Marques}
-                            Prices = {Prices}
-                            Designers = {Designers}
-                            Styles = {Styles}
-                            Couleurs = {Couleurs}
-                            Motifs = {Motifs}
-                            Materiaux = {Materiaux}
-                            handleFilter = {handleFilter}
-                            marquesFilter = {marquesFilter}
-                            pricesFilter = {pricesFilter}
-                            designersFilter = {designersFilter}
-                            stylesFilter = {stylesFilter}
-                            couleursFilter = {couleursFilter}
-                            materiauxFilter = {materiauxFilter}
-                            motifsFilter = {motifsFilter}
-                            translate = {translate}
-                            />
-                        </div>
-                        {/* SideBar filters end */}
+            <div className="container custom">
+                <div className="row">
+                    {/* SideBar filters begin */}
+                    <div className="col-lg-3 primary-sidebar sticky-sidebar">
+                        <Sidebar 
+                        Category = {Category}
+                        Univers_Category = {Univers_Category}
+                        Categories_Univers_Category = {Categories_Univers_Category}
+                        Marques = {Marques}
+                        Prices = {Prices}
+                        Designers = {Designers}
+                        Styles = {Styles}
+                        Couleurs = {Couleurs}
+                        Motifs = {Motifs}
+                        Materiaux = {Materiaux}
+                        handleFilter = {handleFilter}
+                        marquesFilter = {marquesFilter}
+                        pricesFilter = {pricesFilter}
+                        designersFilter = {designersFilter}
+                        stylesFilter = {stylesFilter}
+                        couleursFilter = {couleursFilter}
+                        materiauxFilter = {materiauxFilter}
+                        motifsFilter = {motifsFilter}
+                        translate = {translate}
+                        />
+                    </div>
+                    {/* SideBar filters end */}
 
-                        <div className="col-lg-9">
-                            {/* list of typeproducts begin */}
-                            <section className="mb-75">
-                                <div className="shop-product-fillter">
-                                    <Title elements={[Univers_Category["attributes"]["LIB"], Category["attributes"]["LIB"]]}/>
-                                </div>
-                                <div className="loop-grid">
-                                    <div className="row">
-                                        {Typeprods.map(typeprod => (
-                                            <Typeprod key={typeprod["id"]} typeprod={typeprod}/>
-                                        ))}
-                                    </div>
-                                </div>
-                            </section>
-                            {/* list of typeproducts end */}
-
-                            {/* list of selections begin */}
-                            <section className="mb-100">
-                                    <h2 className="mb-30" style={{textAlign:"center"}}>{translate("Découvrez nos sélections")} :</h2>
-                                    <div className="home-slide-cover">
-                                        <SelectionsSlider />
-                                    </div>
-                            </section>
-                            {/* list of selections end */}
-
-                            {/* list of products begin */}
-                            <section>
-                                <div className="row product-grid-3">
-                                    {Products.length === 0 && (
-                                        <h3>{translate("Pas de produits")}</h3>
-                                    )}
-                                    <h2 className="mb-30">{translate("Découvrez tous les produits de la catégorie") + " " + Category["attributes"]["LIB"]} : </h2>
-                                    {
-                                    Products.slice((currentPage-1)*limit, currentPage*limit)
-                                    .map((product, i) => (
-                                        <div
-                                            className="col-lg-1-5 col-md-4 col-12 col-sm-6"
-                                            key={i}
-                                        >
-                                            <SingleProduct product={product} />
-                                        </div>
+                    <div className="col-lg-9">
+                        {/* list of typeproducts begin */}
+                        <section className="mb-75">
+                            <div className="shop-product-fillter">
+                                <Title elements={[Univers_Category["attributes"]["LIB"], Category["attributes"]["LIB"]]}/>
+                            </div>
+                            <div className="loop-grid">
+                                <div className="row">
+                                    {Typeprods.map(typeprod => (
+                                        <Typeprod key={typeprod["id"]} typeprod={typeprod}/>
                                     ))}
                                 </div>
-                            </section>
-                            {/* list of products end */}
+                            </div>
+                        </section>
+                        {/* list of typeproducts end */}
 
-                            {/* pagination begin */}
-                            <section className="pagination-area mt-15 mb-sm-5 mb-lg-0">
-                                <Pagination
-                                    getPaginationGroup={getPaginationGroup}
-                                    currentPage={currentPage}
-                                    next={next}
-                                    prev={prev}
-                                    handleActive={handleActive}
-                                />
-                            </section>
-                            {/* pagination end */}
+                        {/* list of selections begin */}
+                        <section className="mb-100">
+                                <h2 className="mb-30" style={{textAlign:"center"}}>{translate("Découvrez nos sélections")} :</h2>
+                                <div className="home-slide-cover">
+                                    <SelectionsSlider />
+                                </div>
+                        </section>
+                        {/* list of selections end */}
 
-                        </div>
+                        {/* list of products begin */}
+                        <section>
+                            <div className="row product-grid-3">
+                                {Products.length === 0 && (
+                                    <h3>{translate("Pas de produits")}</h3>
+                                )}
+                                <h2 className="mb-30">{translate("Découvrez tous les produits de la catégorie") + " " + Category["attributes"]["LIB"]} : </h2>
+                                {
+                                Products.slice((currentPage-1)*limit, currentPage*limit)
+                                .map((product, i) => (
+                                    <div
+                                        className="col-lg-1-5 col-md-4 col-12 col-sm-6"
+                                        key={i}
+                                    >
+                                        <SingleProduct product={product} />
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+                        {/* list of products end */}
+
+                        {/* pagination begin */}
+                        <section className="pagination-area mt-15 mb-sm-5 mb-lg-0">
+                            <Pagination
+                                getPaginationGroup={getPaginationGroup}
+                                currentPage={currentPage}
+                                next={next}
+                                prev={prev}
+                                handleActive={handleActive}
+                            />
+                        </section>
+                        {/* pagination end */}
+
                     </div>
                 </div>
-            </section>
+            </div>
     )
 }
 

@@ -1,191 +1,55 @@
 import Link from "next/link"
-var data = [
-    {
-        id: 1,
-        title: "The litigants on the screen are not actors",
-        category: "Politic",
-        views: 126,
-        date: "25 April 2021",
-        img: "blog-1.png",
-        desc: "These people envy me for having a lifestyle they don’t have, but the truth is, sometimes I envy their lifestyle instead. Struggling to sell one multi.",
-    },
-    {
-        id: 2,
-        title: "Essential Qualities of Highly Successful Music",
-        img: "blog-2.png",
-        category: "Global",
-        views: 126,
-        date: "25 April 2021",
-        desc: "These people envy me for having a lifestyle they don’t have, but the truth is, sometimes I envy their lifestyle instead. Struggling to sell one multi.",
-    },
-    {
-        id: 2,
-        title: "Essential Qualities of Highly Successful Music",
-        img: "blog-3.png",
-        category: "Global",
-        views: 126,
-        date: "25 April 2021",
-        desc: "These people envy me for having a lifestyle they don’t have, but the truth is, sometimes I envy their lifestyle instead. Struggling to sell one multi.",
-    },
-    {
-        id: 2,
-        title: "Essential Qualities of Highly Successful Music",
-        img: "blog-4.png",
-        category: "Global",
-        views: 126,
-        date: "25 April 2021",
-        desc: "These people envy me for having a lifestyle they don’t have, but the truth is, sometimes I envy their lifestyle instead. Struggling to sell one multi.",
-    },
-    {
-        id: 2,
-        title: "Essential Qualities of Highly Successful Music",
-        img: "blog-5.png",
-        category: "Global",
-        views: 126,
-        date: "25 April 2021",
-        desc: "These people envy me for having a lifestyle they don’t have, but the truth is, sometimes I envy their lifestyle instead. Struggling to sell one multi.",
-    },
-    {
-        id: 2,
-        title: "Essential Qualities of Highly Successful Music",
-        img: "blog-6.png",
-        category: "Global",
-        views: 126,
-        date: "25 April 2021",
-        desc: "These people envy me for having a lifestyle they don’t have, but the truth is, sometimes I envy their lifestyle instead. Struggling to sell one multi.",
-    },
-    {
-        id: 2,
-        title: "Essential Qualities of Highly Successful Music",
-        img: "blog-7.png",
-        category: "Global",
-        views: 126,
-        date: "25 April 2021",
-        desc: "These people envy me for having a lifestyle they don’t have, but the truth is, sometimes I envy their lifestyle instead. Struggling to sell one multi.",
-    },
-    {
-        id: 2,
-        title: "Essential Qualities of Highly Successful Music",
-        img: "blog-8.png",
-        category: "Global",
-        views: 126,
-        date: "25 April 2021",
-        desc: "These people envy me for having a lifestyle they don’t have, but the truth is, sometimes I envy their lifestyle instead. Struggling to sell one multi.",
-    },
-    {
-        id: 2,
-        title: "Essential Qualities of Highly Successful Music",
-        img: "blog-9.png",
-        category: "Global",
-        views: 126,
-        date: "25 April 2021",
-        desc: "These people envy me for having a lifestyle they don’t have, but the truth is, sometimes I envy their lifestyle instead. Struggling to sell one multi.",
-    },
-    {
-        id: 2,
-        title: "Essential Qualities of Highly Successful Music",
-        img: "blog-10.png",
-        category: "Global",
-        views: 126,
-        date: "25 April 2021",
-        desc: "These people envy me for having a lifestyle they don’t have, but the truth is, sometimes I envy their lifestyle instead. Struggling to sell one multi.",
-    },
-    {
-        id: 2,
-        title: "Essential Qualities of Highly Successful Music",
-        img: "blog-11.png",
-        category: "Global",
-        views: 126,
-        date: "25 April 2021",
-        desc: "These people envy me for having a lifestyle they don’t have, but the truth is, sometimes I envy their lifestyle instead. Struggling to sell one multi.",
-    },
-    {
-        id: 2,
-        title: "Essential Qualities of Highly Successful Music",
-        img: "blog-12.png",
-        category: "Global",
-        views: 126,
-        date: "25 April 2021",
-        desc: "These people envy me for having a lifestyle they don’t have, but the truth is, sometimes I envy their lifestyle instead. Struggling to sell one multi.",
-    },
-    {
-        id: 2,
-        title: "Essential Qualities of Highly Successful Music",
-        img: "blog-13.png",
-        category: "Global",
-        views: 126,
-        date: "25 April 2021",
-        desc: "These people envy me for having a lifestyle they don’t have, but the truth is, sometimes I envy their lifestyle instead. Struggling to sell one multi.",
-    },
-    {
-        id: 2,
-        title: "Essential Qualities of Highly Successful Music",
-        img: "blog-14.png",
-        category: "Global",
-        views: 126,
-        date: "25 April 2021",
-        desc: "These people envy me for having a lifestyle they don’t have, but the truth is, sometimes I envy their lifestyle instead. Struggling to sell one multi.",
-    },
-    {
-        id: 2,
-        title: "Essential Qualities of Highly Successful Music",
-        img: "blog-15.png",
-        category: "Global",
-        views: 126,
-        date: "25 April 2021",
-        desc: "These people envy me for having a lifestyle they don’t have, but the truth is, sometimes I envy their lifestyle instead. Struggling to sell one multi.",
-    },
-];
-function typeprod() {
+
+function category({category}) {
+
+
     return(
         <article
-            className="col-xl-3 col-lg-4 col-md-6 text-center hover-up mb-30 animated"
+            className="col-xl-3 col-lg-4 col-md-6 text-center hover-up animated"
         >
             <div className="post-thumb">
-                <Link href="/blog-post-right">
+                <Link href={`/c${category["id"]}/${category["attributes"]["slug"]}`}>
                     <a>
                         <img
                             className="border-radius-15"
-                            src={`/assets/imgs/blog/${data[0].img}`}
+                            src={`http://localhost:1337${category["attributes"]["image"]["data"]["attributes"]["url"]}`}
                             alt=""
                         />
                     </a>
                 </Link>
-                <div className="entry-meta">
-                    <Link href="/blog-category-grid">
-                        <a className="entry-meta meta-2">
-                            <i className="fi-rs-heart"></i>
-                        </a>
-                    </Link>
-                </div>
             </div>
             <div className="entry-content-2">
-                <h6 className="mb-10 font-sm">
-                    <Link href="/blog-category-grid">
-                        <a className="entry-meta text-muted">
-                            {data[0].category}
-                        </a>
-                    </Link>
-                </h6>
-                <h4 className="post-title mb-15">
-                    <Link href="/blog-post-right">
-                        <a>{data[0].title}</a>
+                <h4 className="post-title mb-10">
+                    <Link href={`/c${category["id"]}/${category["attributes"]["slug"]}`}>
+                        <a>{category["attributes"]["LIB"]}</a>
                     </Link>
                 </h4>
-                <div className="entry-meta font-xs color-grey mt-10 pb-10">
-                    <div>
-                        <span className="post-on mr-10">{data[0].date}</span>
-                        <span className="hit-count has-dot mr-10">
-                            {data[0].views}k Views
-                        </span>
-                        <span className="hit-count has-dot">
-                            4 mins read
-                        </span>
+                {
+                category["attributes"]["typeprods"]&&
+                <>
+                    <div className="mb-20">
+                        { 
+                        category["attributes"]["typeprods"]["data"]
+                        .map((typeprod,index)=>(
+                            <Link href={`/p${typeprod["id"]}/${typeprod["attributes"]["slug"]}`}>
+                                <div key={typeprod["id"]}>
+                                {index+1 + " - " + typeprod["attributes"]["LIB"]}
+                                </div>
+                            </Link>
+                        ))
+                        }
                     </div>
-                </div>
+                    <a
+                        aria-label="Add To Cart"
+                        className="btn"
+                    >
+                        Tous les produits
+                    </a>
+                </>
+                }
             </div>
         </article>
     )
 }
 
-export default typeprod
+export default category
