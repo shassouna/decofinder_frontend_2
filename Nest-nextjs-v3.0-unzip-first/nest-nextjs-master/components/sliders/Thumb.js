@@ -1,56 +1,44 @@
-import { useState } from "react";
-import SwiperCore, { Navigation, Thumbs } from "swiper";
-import "swiper/css/thumbs";
-import { Swiper, SwiperSlide } from "swiper/react";
 
-SwiperCore.use([Navigation, Thumbs]);
+import SwiperCore, { Navigation, Thumbs } from "swiper"
+import "swiper/css/thumbs"
+import { Swiper, SwiperSlide } from "swiper/react"
+
+SwiperCore.use([Navigation, Thumbs])
 
 const ThumbSlider = ({ product }) => {
-    const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
     return (
         <div>
             <Swiper
                 style={{
-                    "--swiper-navigation-color": "#fff",
+                    "--swiper-navigation-color": "#000",
                     "--swiper-pagination-color": "#fff",
                 }}
-                
                 spaceBetween={10}
                 navigation={true}
-                thumbs={{ swiper: thumbsSwiper }}
                 className="mySwiper2"
             >
-                {product.gallery.map((item) => (
-                    <SwiperSlide>
-                        <img src={item.thumb} />
-                        {/* <Zoom
-                            img={item.thumb}
-                            zoomScale={5}
-                            width={500}
-                            height={500}
-                            ransitionTime={0.5}
-                        /> */}
+                {product["attributes"]["images"]["data"].map((item) => (
+                    <SwiperSlide >
+                        <img id={item["id"]} src={`http://localhost:1337${item["attributes"]["url"]}`} />
                     </SwiperSlide>
                 ))}
             </Swiper>
             <Swiper
-                onSwiper={setThumbsSwiper}
-                
                 spaceBetween={10}
-                slidesPerView={4}
+                slidesPerView={product["attributes"]["images"]["data"].length}
                 freeMode={true}
                 watchSlidesProgress={true}
                 className="mySwiper"
-            >
-                {product.gallery.map((item) => (
+                >
+                {product["attributes"]["images"]["data"].map((item) => (
                     <SwiperSlide>
-                        <img src={item.thumb} />
+                         <img id={item["id"]} src={`http://localhost:1337${item["attributes"]["url"]}`} />
                     </SwiperSlide>
                 ))}
             </Swiper>
         </div>
-    );
-};
+    )
+}
 
-export default ThumbSlider;
+export default ThumbSlider

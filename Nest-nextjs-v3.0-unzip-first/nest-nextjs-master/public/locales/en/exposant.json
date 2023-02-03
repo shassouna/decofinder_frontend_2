@@ -1,7 +1,26 @@
 {
+    "Découvrez nos sélections" : "Discover our selections",
     "Adresse" : "Address",
     "Appelez-nous" : "Call Us",
     "Fax" : "Fax",
     "Suivez-nous" : "follow us",
-    "Show Room" : "Show Room"     
+    "Show Room" : "Show Room",
+    "Coordonnées" :"Contact details",
+    "Numéro de téléphone" : "Phone number",
+    "Pas de produits" : "No products",
+    "PRODUITS VENDUS PAR" : "Products sold by",
+    "Activités" : "Activities",
+    "PRODUITS" : "Products",
+    "Marques" : "Brands",
+    "Marques Revendues" : "Sold marks",
+    "Catalogues" : "Catalogs",
+    "News" : "News",
+    "Newsletters" : "Newsletters",
+    "Documentation" : "Documentation",
+    "Contacter l'entreprise" : "Contact the company",
+    "Points de vente" : "Points of sale",
+    "Visiter le site" : "Visit the site",
+    "Communiqués de presse" : "Press Releases",
+    "Pas de communiqués" : "No press releases",
+    "Pas de newsletters" : "No newsletters"
 }

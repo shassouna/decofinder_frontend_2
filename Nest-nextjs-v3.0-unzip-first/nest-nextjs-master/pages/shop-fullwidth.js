@@ -1,69 +1,68 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import CompareModal from "./../components/ecommerce/CompareModal";
-import Pagination from "./../components/ecommerce/Pagination";
-import QuickView from "./../components/ecommerce/QuickView";
-import ShowSelect from "./../components/ecommerce/Filter/ShowSelect";
-import SingleProduct from "./../components/ecommerce/SingleProduct";
-import SortSelect from "./../components/ecommerce/Filter/SortSelect";
-import WishlistModal from "./../components/ecommerce/WishlistModal";
-import Layout from "./../components/layout/Layout";
-import { fetchProduct } from "./../redux/action/product";
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
+import { connect } from "react-redux"
+import Pagination from "./../components/ecommerce/Pagination"
+import QuickView from "./../components/ecommerce/QuickView"
+import ShowSelect from "./../components/ecommerce/Filter/ShowSelect"
+import SingleProduct from "./../components/ecommerce/SingleProduct"
+import SortSelect from "./../components/ecommerce/Filter/SortSelect"
+import WishlistModal from "./../components/ecommerce/WishlistModal"
+import Layout from "./../components/layout/Layout"
+import { fetchProduct } from "./../redux/action/product"
 
 const ProductsFullWidth = ({ products, productFilters, fetchProduct }) => {
-    // console.log(products);
+    // console.log(products)
 
     let Router = useRouter(),
         searchTerm = Router.query.search,
         showLimit = 12,
-        showPagination = 4;
+        showPagination = 4
 
-    let [pagination, setPagination] = useState([]);
-    let [limit, setLimit] = useState(showLimit);
-    let [pages, setPages] = useState(Math.ceil(products.items.length / limit));
-    let [currentPage, setCurrentPage] = useState(1);
+    let [pagination, setPagination] = useState([])
+    let [limit, setLimit] = useState(showLimit)
+    let [pages, setPages] = useState(Math.ceil(products.items.length / limit))
+    let [currentPage, setCurrentPage] = useState(1)
 
     useEffect(() => {
-        fetchProduct(searchTerm, "/static/product.json", productFilters);
-        cratePagination();
-    }, [productFilters, limit, pages, products.items.length]);
+        fetchProduct(searchTerm, "/static/product.json", productFilters)
+        cratePagination()
+    }, [productFilters, limit, pages, products.items.length])
 
     const cratePagination = () => {
         // set pagination
         let arr = new Array(Math.ceil(products.items.length / limit))
             .fill()
-            .map((_, idx) => idx + 1);
+            .map((_, idx) => idx + 1)
 
-        setPagination(arr);
-        setPages(Math.ceil(products.items.length / limit));
-    };
+        setPagination(arr)
+        setPages(Math.ceil(products.items.length / limit))
+    }
 
-    const startIndex = currentPage * limit - limit;
-    const endIndex = startIndex + limit;
-    const getPaginatedProducts = products.items.slice(startIndex, endIndex);
+    const startIndex = currentPage * limit - limit
+    const endIndex = startIndex + limit
+    const getPaginatedProducts = products.items.slice(startIndex, endIndex)
 
-    let start = Math.floor((currentPage - 1) / showPagination) * showPagination;
-    let end = start + showPagination;
-    const getPaginationGroup = pagination.slice(start, end);
+    let start = Math.floor((currentPage - 1) / showPagination) * showPagination
+    let end = start + showPagination
+    const getPaginationGroup = pagination.slice(start, end)
 
     const next = () => {
-        setCurrentPage((page) => page + 1);
-    };
+        setCurrentPage((page) => page + 1)
+    }
 
     const prev = () => {
-        setCurrentPage((page) => page - 1);
-    };
+        setCurrentPage((page) => page - 1)
+    }
 
     const handleActive = (item) => {
-        setCurrentPage(item);
-    };
+        setCurrentPage(item)
+    }
 
     const selectChange = (e) => {
-        setLimit(Number(e.target.value));
-        setCurrentPage(1);
-        setPages(Math.ceil(products.items.length / Number(e.target.value)));
-    };
+        setLimit(Number(e.target.value))
+        setCurrentPage(1)
+        setPages(Math.ceil(products.items.length / Number(e.target.value)))
+    }
     return (
         <>
             <Layout parent="Home" sub="Shop" subChild="Wide">
@@ -163,18 +162,18 @@ const ProductsFullWidth = ({ products, productFilters, fetchProduct }) => {
                 </div> */}
             </Layout>
         </>
-    );
-};
+    )
+}
 
 const mapStateToProps = (state) => ({
     products: state.products,
     productFilters: state.productFilters,
-});
+})
 
 const mapDidpatchToProps = {
     // openCart,
     fetchProduct,
     // fetchMoreProduct,
-};
+}
 
-export default connect(mapStateToProps, mapDidpatchToProps)(ProductsFullWidth);
+export default connect(mapStateToProps, mapDidpatchToProps)(ProductsFullWidth)
