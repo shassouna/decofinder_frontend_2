@@ -481,7 +481,7 @@ const Exposant = (props) => {
                                         className="col-lg-1-5 col-md-4 col-12 col-sm-6"
                                         key={i}
                                     >
-                                        <SingleProduct product={product} />
+                                        <SingleProduct product={product} translate={translate}/>
                                     </div>
                                 ))}
                             </div>

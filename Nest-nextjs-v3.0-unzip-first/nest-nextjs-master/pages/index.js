@@ -1,16 +1,20 @@
-import CategoryTab from "../components/ecommerce/categoryTab";
-import FeatchDeals from "../components/ecommerce/fetchDeals";
-import FeatchTab from "../components/ecommerce/fetchTab";
-import FetchTabSlider from "../components/ecommerce/fetchTabSlider";
-import Bottom from "../components/elements/Bottom";
-import QuickView from "./../components/ecommerce/QuickView";
-import Banner5 from "./../components/elements/Banner5";
-import Deals1 from "./../components/elements/Deals1";
-import IntroPopup from "./../components/elements/IntroPopup";
-import Layout from "./../components/layout/Layout";
-import CategorySlider from "./../components/sliders/Category";
-import Intro1 from "./../components/sliders/Intro1";
-import Link from "next/link";
+import CategoryTab from "../components/ecommerce/categoryTab"
+import FeatchDeals from "../components/ecommerce/fetchDeals"
+import FetchTabSlider from "../components/ecommerce/fetchTabSlider"
+import Bottom from "../components/elements/Bottom"
+import QuickView from "./../components/ecommerce/QuickView"
+import Banner5 from "./../components/elements/Banner5"
+import IntroPopup from "./../components/elements/IntroPopup"
+import Layout from "./../components/layout/Layout"
+import CategorySlider from "./../components/sliders/Category"
+import Intro1 from "./../components/sliders/Intro1"
+import Link from "next/link"
+// Import from Next
+import { useRouter } from "next/router"
+import { useTranslation } from "next-i18next"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+// import from libraries
+import axios from "axios" 
 
 export default function Home() {
     return (
@@ -105,5 +109,37 @@ export default function Home() {
                 <QuickView />
             </Layout>
         </>
-    );
+    )
+}
+
+export async function getServerSideProps (context) {
+
+    // Declarations 
+    let findSuperuniverss = undefined
+
+    // Import qs
+    const qs = require("qs")
+
+    // Query superunivers
+    const querySuperunivers = qs.stringify({
+        populate: [  
+            "localizations"
+        ],
+        locale:"es"
+    })
+
+    const superuniversRes = await axios.get(`http://localhost:1337/api/superuniverss?${querySuperunivers}`)
+    // get localization superuniverss
+    findSuperuniverss = superuniversRes["data"]["data"]
+    /*superuniversRes["data"]["data"][0]
+    findSuperuniverss  = superuniversRes["data"]["data"]
+    if(!findSuperuniverss ) findSuperuniverss  = superuniversRes["data"]["data"]*/
+    console.log(findSuperuniverss)
+    
+    return {
+        props: {
+            ...(await serverSideTranslations(context["locale"],["home"])),
+            Superunivers : findSuperuniverss,
+        }
+    }
 }

@@ -1,46 +1,26 @@
 import Link from "next/link"
-import React from "react"
-import { connect } from "react-redux"
-import { toast } from "react-toastify"
-import { addToCart } from "../../redux/action/cart"
-import { addToCompare } from "../../redux/action/compareAction"
-import { openQuickView } from "../../redux/action/quickViewAction"
-import { addToWishlist } from "../../redux/action/wishlistAction"
 
 const SingleProduct = ({
     product,
-    addToWishlist
+    translate
 }) => {
 
-    const handleWishlist = (product) => {
-        addToWishlist(product)
-        toast("Added to Wishlist !")
-    }
     return (
         <>
             <div className="product-cart-wrap mb-30">
                 <div className="product-img-action-wrap">
                     <div className="product-img product-img-zoom">
-                        <Link
-                            href={`/z${product["id"]}/${product["attributes"]["slug"]}`}
-                        >
+                        {product["attributes"]["images"]["data"]&&
+                        <Link href={`/z${product["id"]}/${product["attributes"]["slug"]}`}>
                             <a>
-                                <img
-                                    className="default-img"
-                                    src={"/assets/imgs/shop/product-1-1.jpg"}
-                                    alt=""
-                                />
-                            </a>
+                                    <img
+                                        className="default-img"
+                                        src={`http://localhost:1337${product["attributes"]["images"]["data"][0]["attributes"]["url"]}`}
+                                        alt=""
+                                    />
+                                </a>
                         </Link>
-                    </div>
-                    <div className="product-action-1">
-                        <a
-                            aria-label="Add To Wishlist"
-                            className="action-btn hover-up"
-                            onClick={(e) => handleWishlist(product)}
-                        >
-                            <i className="fi-rs-heart"></i>
-                        </a>
+                        }
                     </div>
 
                     <div className="product-badges product-badges-position product-badges-mrg mb-20">
@@ -52,15 +32,17 @@ const SingleProduct = ({
                     </div>
                 </div>
                 <div className="product-content-wrap">
+                    {product["attributes"]["exposant"]["data"]&&
                     <h2>
                         <Link
                             href={`/pp${product["attributes"]["exposant"]["data"]["id"]}/${product["attributes"]["exposant"]["data"]["attributes"]["slug"]}`}
-           
+        
                         >
                             <a>{product["attributes"]["exposant"]["data"]["attributes"]["NOM"]}</a>
                         </Link>
-                    </h2>
-                    {product["attributes"]["typeprod"]&&product["attributes"]["typeprod"]["data"]&&
+                    </h2>                    
+                    }
+                    {product["attributes"]["typeprod"]["data"]&&
                     <div className="product-rate-cover">
                         <Link
                             href={`/p${product["attributes"]["typeprod"]["data"]["id"]}/${product["attributes"]["typeprod"]["data"]["attributes"]["slug"]}`}
@@ -75,7 +57,7 @@ const SingleProduct = ({
 
                     <div className="product-card-bottom">
                         <div className="product-price">
-                            <span>{product["attributes"]["TARIF_PUB"]?product["attributes"]["TARIF_PUB"]+" €":"Prix sur demande"}</span>
+                            <span>{product["attributes"]["TARIF_PUB"]?product["attributes"]["TARIF_PUB"]+" €": translate("Prix sur demande")}</span>
                         </div>
                     </div>
                 </div>
@@ -84,11 +66,4 @@ const SingleProduct = ({
     )
 }
 
-const mapDispatchToProps = {
-    addToCart,
-    addToCompare,
-    addToWishlist,
-    openQuickView,
-}
-
-export default connect(null, mapDispatchToProps)(SingleProduct)
+export default SingleProduct
