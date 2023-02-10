@@ -1,14 +1,13 @@
-import Link from "next/link";
-import { useState } from "react";
-import Timer from "./Timer";
+import Link from "next/link"
+import { useState } from "react"
 
 const IntroPopup = () => {
-    const [openClass, setOpenClass] = useState(0);
+    const [openClass, setOpenClass] = useState(0)
 
     const handleRemove = () => {
-        setOpenClass(!openClass);
-    };
-    const fixDate = new Date();
+        setOpenClass(!openClass)
+    }
+    const fixDate = new Date()
     return (
         <>
             <div
@@ -65,13 +64,6 @@ const IntroPopup = () => {
                                     </div>
                                 </div>
                                 <div className="deal-bottom">
-                                    <p className="mb-20">Hurry Up! Offer End In:</p>
-                                    {/* <Timer endDateTime="2022-11-27 00:00:00" /> */}
-                                    <Timer
-                                        endDateTime={fixDate.setDate(
-                                            fixDate.getDate() + 2
-                                        )}
-                                    />
                                     <div className="product-detail-rating">
 									<div className="product-rate-cover text-end">
 										<div className="product-rate d-inline-block">
@@ -102,7 +94,7 @@ const IntroPopup = () => {
                 }
             ></div>
         </>
-    );
-};
+    )
+}
 
-export default IntroPopup;
+export default IntroPopup

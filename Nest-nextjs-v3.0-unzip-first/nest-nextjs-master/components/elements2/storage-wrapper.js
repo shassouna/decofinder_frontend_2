@@ -22,4 +22,4 @@ const StorageWrapper = (props) => {
     return <>{props.children}</>;
 };
 
-export default connect(null, { saveStoredItems })(StorageWrapper);
+export default StorageWrapper

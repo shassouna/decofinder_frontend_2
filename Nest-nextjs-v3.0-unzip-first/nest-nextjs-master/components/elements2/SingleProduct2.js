@@ -1,6 +1,5 @@
 import Link from "next/link"
 import React from "react"
-import { connect } from "react-redux"
 import { toast } from "react-toastify"
 import { addToCart } from "../../redux/action/cart"
 import { addToCompare } from "../../redux/action/compareAction"

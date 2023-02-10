@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import Head from "next/head";
-import Breadcrumb from "./Breadcrumb";
-import Footer from "./Footer";
-import Header from "./Header";
-import MobileMenu from "./MobileMenu";
-
+import React, { useState } from "react"
+import Head from "next/head"
+import Breadcrumb from "./Breadcrumb"
+import Footer from "./Footer"
+import Header from "./Header"
+import MobileMenu from "./MobileMenu"
+     
 const Layout = ({
     children,
     parent,
@@ -12,18 +12,19 @@ const Layout = ({
     subChild,
     noBreadcrumb,
     headerStyle,
+    translate
 }) => {
-    const [isToggled, setToggled] = useState(false);
+    const [isToggled, setToggled] = useState(false)
     const toggleClick = () => {
-        setToggled(!isToggled);
+        setToggled(!isToggled)
         isToggled
             ? document
                   .querySelector("body")
                   .classList.remove("mobile-menu-active")
             : document
                   .querySelector("body")
-                  .classList.add("mobile-menu-active");
-    };
+                  .classList.add("mobile-menu-active")
+    }
 
     return (
         <>
@@ -41,9 +42,9 @@ const Layout = ({
                 <Breadcrumb parent={parent} sub={sub} subChild={subChild} noBreadcrumb={noBreadcrumb} />
                 {children}
             </main>
-            <Footer />
+            <Footer translate={translate}/>
         </>
-    );
-};
+    )
+}
 
-export default Layout;
+export default Layout

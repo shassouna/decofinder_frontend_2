@@ -2,7 +2,8 @@ import Link from "next/link"
 
 const SingleProduct = ({
     product,
-    translate
+    translate,
+    showButtonInSingleProduct
 }) => {
 
     return (
@@ -34,27 +35,19 @@ const SingleProduct = ({
                 <div className="product-content-wrap">
                     {product["attributes"]["exposant"]["data"]&&
                     <h2>
-                        <Link
-                            href={`/pp${product["attributes"]["exposant"]["data"]["id"]}/${product["attributes"]["exposant"]["data"]["attributes"]["slug"]}`}
-        
-                        >
+                        <Link href={`/pp${product["attributes"]["exposant"]["data"]["id"]}/${product["attributes"]["exposant"]["data"]["attributes"]["slug"]}`}>
                             <a>{product["attributes"]["exposant"]["data"]["attributes"]["NOM"]}</a>
                         </Link>
                     </h2>                    
                     }
                     {product["attributes"]["typeprod"]["data"]&&
                     <div className="product-rate-cover">
-                        <Link
-                            href={`/p${product["attributes"]["typeprod"]["data"]["id"]}/${product["attributes"]["typeprod"]["data"]["attributes"]["slug"]}`}
-                        >
-                            <span className="font-small">
-                                {product["attributes"]["typeprod"]["data"]["attributes"]["LIB"]}
-                            </span>
+                        <Link href={`/p${product["attributes"]["typeprod"]["data"]["id"]}/${product["attributes"]["typeprod"]["data"]["attributes"]["slug"]}`}>
+                            <span className="font-small">{product["attributes"]["typeprod"]["data"]["attributes"]["LIB"]}</span>
                         </Link>
                         <p>{product["attributes"]["TITRE"]}</p>
                     </div>
                     }
-
                     <div className="product-card-bottom">
                         <div className="product-price">
                             <span>{product["attributes"]["TARIF_PUB"]?product["attributes"]["TARIF_PUB"]+" €": translate("Prix sur demande")}</span>
@@ -62,6 +55,34 @@ const SingleProduct = ({
                     </div>
                 </div>
             </div>
+            {showButtonInSingleProduct ==true&&
+            <>
+                {
+                product["attributes"]["SELECTION"]==1&&
+                <a className="btn w-100 hover-up">
+                    Toutes les sélections du Jury
+                </a>
+                }
+                {
+                product["attributes"]["COUP_DE_COEUR"]==1&&
+                <a className="btn w-100 hover-up">
+                    Tous les coups de coeur
+                </a>
+                }
+                {
+                product["attributes"]["ACHAT_EN_LIGNE"]==1&&
+                <a className="btn w-100 hover-up">
+                    Tous les achats en ligne 
+                </a>
+                }
+                {
+                product["attributes"]["A_SAISIR"]==1&&
+                <a className="btn w-100 hover-up">
+                    Toutes les promotions
+                </a>
+                }
+            </>
+            }
         </>
     )
 }

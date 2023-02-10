@@ -1,145 +1,160 @@
-import CategoryTab from "../components/ecommerce/categoryTab"
-import FeatchDeals from "../components/ecommerce/fetchDeals"
-import FetchTabSlider from "../components/ecommerce/fetchTabSlider"
-import Bottom from "../components/elements/Bottom"
-import QuickView from "./../components/ecommerce/QuickView"
-import Banner5 from "./../components/elements/Banner5"
-import IntroPopup from "./../components/elements/IntroPopup"
-import Layout from "./../components/layout/Layout"
-import CategorySlider from "./../components/sliders/Category"
-import Intro1 from "./../components/sliders/Intro1"
-import Link from "next/link"
+
+// Import from components
+import IntroPopup from "./../components/elements2/IntroPopup"
+import Intro1 from "./../components/elements2/Intro1"
+import SuperuniverssSlider from "./../components/elements2/SuperuniverssSlider"
+import RelatedProducts from "./../components/elements2/RelatedProducts"
+import NouveautesProducts from "./../components/elements2/NouveautesProducts"
+import Description from "../components/elements2/DescriptionHome"
+import CommuniquesTag from "../components/elements2/Communiques"
 // Import from Next
 import { useRouter } from "next/router"
 import { useTranslation } from "next-i18next"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 // import from libraries
 import axios from "axios" 
+// import from react
+import {useState} from "react"
 
-export default function Home() {
+export default function Home(props) {
+
+    /*---------------------------------------------------Hooks begin---------------------------------------------------*/
+    // Routers
+    const router = useRouter()
+
+    // Translations
+    const {t : translate} = useTranslation("home")
+
+    // States
+    const [Superuniverss, setSuperuniverss] = useState(props["Superuniverss"])
+    const [Products_Home, setProducts_Home] = useState(props["Products_Home"])
+    const [Communiques, setCommuniques] = useState(props["Communiques"])
+    const [Products_Nouveautes, setProducts_Nouveautes] = useState(props["Products_Nouveautes"])
+    const [showButtonInSingleProduct, setShowButtonInSingleProduct] = useState(true)
+    /*---------------------------------------------------Hooks end---------------------------------------------------*/
+
     return (
         <>
             <IntroPopup />
 
-            <Layout noBreadcrumb="d-none">
-                <section className="home-slider position-relative mb-30">
-                    <div className="container">
-                        <div className="home-slide-cover mt-30">
-                            <Intro1 />
+            <div className="home-slider position-relative mb-30">
+                <div className="container">
+                    <div className="home-slide-cover mt-30">
+                        <Intro1 />
+                    </div>
+                </div>
+            </div>
+
+            <div className="container mb-180">
+                <div className="row">
+                    <div className="col-12">
+                        <div className="row related-products position-relative">
+                            <RelatedProducts Products = {Products_Home} translate = {translate} showButtonInSingleProduct={showButtonInSingleProduct}/>
                         </div>
                     </div>
-                </section>
+                </div>
+            </div>
 
-                <section className="popular-categories section-padding">
-                    <div className="container wow animate__fadeIn animate__animated">
-                        <div className="section-title">
-                            <div className="title">
-                                <h3>Featured Categories</h3>
-                                <ul className="list-inline nav nav-tabs links">
-                                    <li className="list-inline-item nav-item">
-                                        <Link href="/products">
-                                            <a className="nav-link">Cake & Milk</a>
-                                        </Link>
-                                    </li>
-                                    <li className="list-inline-item nav-item">
-                                        <Link href="/products">
-                                            <a className="nav-link">Coffes & Teas</a>
-                                        </Link>
-                                    </li>
-                                    <li className="list-inline-item nav-item">
-                                        <Link href="/products">
-                                            <a className="nav-link active">Pet Foods</a>
-                                        </Link>
-                                    </li>
-                                    <li className="list-inline-item nav-item">
-                                        <Link href="/products">
-                                            <a className="nav-link">Vegetables</a>
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="carausel-10-columns-cover position-relative">
-                            <div className="carausel-10-columns" id="carausel-10-columns">
-                                <CategorySlider />
-                            </div>
-                        </div>
+            <div className="container mb-60">
+                <div className="carausel-10-columns-cover position-relative">
+                    <div className="col-12">
+                        <h3 className="section-title style-1 mb-30">{translate("Tous les Mega Univers")+" :"}</h3>
                     </div>
-                </section>
+                    <div className="carausel-10-columns" id="carausel-10-columns">
+                        <SuperuniverssSlider Superuniverss={Superuniverss} />
+                    </div>
+                </div>
+            </div>
 
-                <section className="banners mb-25">
-                    <div className="container">
-                        <div className="row">
-                            <Banner5 />
+            <div className="container mb-60">
+                <div className="row">
+                    <Description locale={router["locale"]}/>
+                </div>
+            </div>
+
+            <div className="container mb-60">
+                <div className="row">
+                    <h3 className="mb-25" style={{textAlign : "center"}}>{translate("DERNIERS COMMUNIQUÉS DE PRESSE")} : </h3>
+                    <div className="loop-grid loop-list pr-30 mb-30">
+                        <CommuniquesTag items = {Communiques}/>   
+                    </div>
+                    <div  style={{textAlign : "center"}}>
+                        <a className="btn w-25 hover-up" style={{minWidth : "400px"}}>
+                            {translate("Tous les communiqués de presse")}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div className="container">
+                <div className="row">
+                    <h3 style={{textAlign : "center"}}>{translate("Les Nouveautés")} : </h3>
+                    <div className="col-12 mt-25">
+                        <div className="row related-products position-relative">
+                            <NouveautesProducts Products = {Products_Nouveautes} translate = {translate} />
                         </div>
                     </div>
-                </section>
-
-                <section className="product-tabs section-padding position-relative">
-                    <div className="container">
-                        <div className="col-lg-12">
-                            <CategoryTab />
-                        </div>
-                    </div>
-                </section>
-
-                <section className="section-padding pb-5">
-                    <div className="container">
-                        <FetchTabSlider />
-                    </div>
-                </section>
-
-                <section className="section-padding pb-5">
-                    <div className="container">
-                        <div className="section-title wow animate__animated animate__fadeIn" data-wow-delay="0">
-                            <h3 className="">Deals Of The Day</h3>
-                            <Link href="/products">
-                                <a className="show-all">
-                                    All Deals
-                                    <i className="fi-rs-angle-right"></i>
-                                </a>
-                            </Link>
-                        </div>
-                        <FeatchDeals />
-                    </div>
-                </section>
-
-                <Bottom />
-
-                <QuickView />
-            </Layout>
+                </div>
+            </div>
         </>
     )
 }
 
 export async function getServerSideProps (context) {
 
-    // Declarations 
-    let findSuperuniverss = undefined
-
     // Import qs
     const qs = require("qs")
 
+    // Query products to show in home page
+    const queryProducts = qs.stringify({
+        populate : [
+            "images",
+            "exposant",
+            "typeprod"
+        ],
+        filters : {
+            Afficher_dans_homepage : {$eq : true}
+        },
+        locale: context["locale"]
+    })
+    const productsRes = await axios.get(`http://localhost:1337/api/produits?${queryProducts}`)  
+ 
+
     // Query superunivers
     const querySuperunivers = qs.stringify({
-        populate: [  
-            "localizations"
-        ],
-        locale:"es"
+        populate : ["image"],
+        locale: context["locale"]
     })
-
     const superuniversRes = await axios.get(`http://localhost:1337/api/superuniverss?${querySuperunivers}`)
-    // get localization superuniverss
-    findSuperuniverss = superuniversRes["data"]["data"]
-    /*superuniversRes["data"]["data"][0]
-    findSuperuniverss  = superuniversRes["data"]["data"]
-    if(!findSuperuniverss ) findSuperuniverss  = superuniversRes["data"]["data"]*/
-    console.log(findSuperuniverss)
-    
+ 
+    // Query communiques
+    const queryCommuniques = qs.stringify({
+        populate : ["image"],
+        locale: context["locale"]
+    })
+    const communiquesRes = await axios.get(`http://localhost:1337/api/communiques?${queryCommuniques}`)
+
+    // Query products Nouveautes
+    const queryProductsNouveautes = qs.stringify({
+        populate : [
+            "images",
+            "exposant",
+            "typeprod"
+        ],
+        filters : {
+            NOUVEAUTE : {$eq : 1}
+        },
+        locale: context["locale"]
+    })
+    const productsNouveautesRes = await axios.get(`http://localhost:1337/api/produits?${queryProductsNouveautes}`)  
+
     return {
         props: {
             ...(await serverSideTranslations(context["locale"],["home"])),
-            Superunivers : findSuperuniverss,
+            Superuniverss : superuniversRes["data"]["data"],
+            Products_Home : productsRes["data"]["data"],
+            Communiques : communiquesRes["data"]["data"],
+            Products_Nouveautes : productsNouveautesRes["data"]["data"],
         }
     }
 }

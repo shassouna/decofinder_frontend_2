@@ -2,11 +2,11 @@ import { useEffect, useState } from "react"
 import SwiperCore, { Navigation } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { fetchByCatagory } from "../../redux/action/product"
-import SingleProduct from "../elements2/SingleProduct"
+import SingleProduct from "./SingleProduct"
 
 SwiperCore.use([Navigation])
 
-const RelatedSlider = ({Products, translate}) => {
+const RelatedSlider = ({Products, translate, showButtonInSingleProduct}) => {
 
     return (
         <>
@@ -15,7 +15,7 @@ const RelatedSlider = ({Products, translate}) => {
                 <Swiper slidesPerView={4} spaceBetween={30} navigation={{ prevEl: ".custom_prev_n", nextEl: ".custom_next_n"}} className="custom-class">
                 {Products.map((product, i) => (
                     <SwiperSlide key={product["id"]+i}>
-                        <SingleProduct product={product} translate={translate}/>
+                        <SingleProduct product={product} translate={translate} showButtonInSingleProduct={showButtonInSingleProduct}/>
                     </SwiperSlide>
                 ))}
                 </Swiper>

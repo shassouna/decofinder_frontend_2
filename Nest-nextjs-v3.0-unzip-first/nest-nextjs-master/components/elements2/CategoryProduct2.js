@@ -1,34 +1,9 @@
-import { useRouter } from "next/router";
-import { connect } from "react-redux";
-import { updateProductCategory } from "../../../redux/action/productFiltersAction";
 
-const CategoryProduct3 = ({ updateProductCategory }) => {
+const CategoryProduct2 = () => {
 
-
-
-
-    const router = useRouter();
-
-    // const removeSearchTerm = () => {
-    //     router.push({
-    //         pathname: "/products",
-    //     });
-    // };
-
-    const selectCategory = (e, category) => {
-        e.preventDefault();
-        // removeSearchTerm();
-        updateProductCategory(category);
-        router.push({
-            pathname: "/products",
-            query: {
-                cat: category, //
-            },
-        });
-    };
     return (
         <>
-            <ul  className="end">
+            <ul>
                 <li onClick={(e) => selectCategory(e, "jeans")}>
                     <a>
                         <img
@@ -83,4 +58,4 @@ const CategoryProduct3 = ({ updateProductCategory }) => {
     );
 };
 
-export default connect(null, { updateProductCategory })(CategoryProduct3);
+export default CategoryProduct2

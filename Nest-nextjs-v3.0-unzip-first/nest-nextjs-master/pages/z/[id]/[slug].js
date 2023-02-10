@@ -11,7 +11,7 @@ import { useState } from 'react'
 // import from components
 import ThumbSlider from "../../../components/elements2/Thumb"
 import DescriptionProduct from "../../../components/elements2/DescriptionProduct"
-import RelatedProducts from "../../../components/elements2/ProductsAssocie"
+import RelatedProducts from "../../../components/elements2/RelatedProducts"
 
 const ProductId = (props) => {
     /*---------------------------------------------------Hooks begin---------------------------------------------------*/

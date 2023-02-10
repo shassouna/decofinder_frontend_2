@@ -1,9 +1,8 @@
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import CategoryProduct2 from "../ecommerce/Filter/CategoryProduct2";
-import CategoryProduct3 from "../ecommerce/Filter/CategoryProduct3";
-import Search from "../ecommerce/Search";
+import Link from "next/link"
+import React, { useEffect, useState } from "react"
+import CategoryProduct2 from "../elements2/CategoryProduct2"
+import CategoryProduct3 from "../elements2/CategoryProduct3"
+import Search from "../elements2/Search"
 
 const Header = ({
     totalCartItems,
@@ -11,19 +10,19 @@ const Header = ({
     toggleClick,
     totalWishlistItems,
 }) => {
-    const [isToggled, setToggled] = useState(false);
-    const [scroll, setScroll] = useState(0);
+    const [isToggled, setToggled] = useState(false)
+    const [scroll, setScroll] = useState(0)
 
     useEffect(() => {
         document.addEventListener("scroll", () => {
-            const scrollCheck = window.scrollY >= 100;
+            const scrollCheck = window.scrollY >= 100
             if (scrollCheck !== scroll) {
-                setScroll(scrollCheck);
+                setScroll(scrollCheck)
             }
-        });
-    });
+        })
+    })
 
-    const handleToggle = () => setToggled(!isToggled);
+    const handleToggle = () => setToggled(!isToggled)
 
     return (
         <>
@@ -1071,13 +1070,8 @@ const Header = ({
                 </div>
             </header>
         </>
-    );
-};
+    )
+}
 
-const mapStateToProps = (state) => ({
-    totalCartItems: state.cart.length,
-    totalCompareItems: state.compare.items.length,
-    totalWishlistItems: state.wishlist.items.length,
-});
 
-export default connect(mapStateToProps, null)(Header);
+export default Header

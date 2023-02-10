@@ -13,7 +13,6 @@ const Communiques = ({ items }) => {
                     >
                     </div>
                     <div className="entry-content-2">
-
                         <p className="post-exerpt mb-30">
                             {item["attributes"]["Communique"]}
                         </p>
