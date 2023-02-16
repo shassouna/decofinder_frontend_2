@@ -1,26 +1,19 @@
-import { connect } from "react-redux";
-import { toast } from "react-toastify";
-import Layout from "../components/layout/Layout";
-import { addToCart } from "../redux/action/cart";
-import {
-    clearWishlist,
-    closeWishlistModal,
-    deleteFromWishlist
-} from "../redux/action/wishlistAction";
+
+import { toast } from "react-toastify"
+import Layout from "../components/layout/Layout"
 
 const Wishlist = ({
     wishlist,
     clearWishlist,
-    closeWishlistModal,
     deleteFromWishlist,
-    addToCart,
+    addToCart
 }) => {
     
 
     const handleCart = (product) => {
-        addToCart(product);
-        toast("Product added to Cart !");
-    };
+        addToCart(product)
+        toast("Product added to Cart !")
+    }
     return (
         <>
             <Layout parent="Home" sub="Shop" subChild="Wishlist">
@@ -177,18 +170,7 @@ const Wishlist = ({
                 </section>
             </Layout>
         </>
-    );
-};
+    )
+}
 
-const mapStateToProps = (state) => ({
-    wishlist: state.wishlist,
-});
-
-const mapDispatchToProps = {
-    closeWishlistModal,
-    deleteFromWishlist,
-    clearWishlist,
-    addToCart,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Wishlist);
+export default Wishlist

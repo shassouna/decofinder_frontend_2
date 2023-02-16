@@ -131,7 +131,7 @@ const Footer = ({translate}) => {
                                 className="footer-link-widget col  wow animate__animated animate__fadeInUp"
                                 data-wow-delay=".4s"
                             >
-                                <h4 className="widget-title ">Popular</h4>
+                                <h4 className="widget-title ">{translate("Acheter")}</h4>
                                 <ul className="footer-list  mb-sm-5 mb-md-0">
                                     <li>
                                         <a href="#">Milk & Flavoured Milk</a>
@@ -160,32 +160,17 @@ const Footer = ({translate}) => {
                                 className="footer-link-widget widget-install-app col  wow animate__animated animate__fadeInUp"
                                 data-wow-delay=".5s"
                             >
-                                <h4 className="widget-title ">Install App</h4>
-                                <p className="">From App Store or Google Play</p>
                                 <div className="download-app ">
-                                    <a
-                                        href="#"
-                                        className="hover-up mb-sm-2 mb-lg-0"
-                                    >
-                                        <img
-                                            className="active"
-                                            src="/assets/imgs/theme/app-store.jpg"
-                                            alt=""
-                                        />
-                                    </a>
-                                    <a href="#" className="hover-up mb-sm-2">
-                                        <img
-                                            src="/assets/imgs/theme/google-play.jpg"
-                                            alt=""
-                                        />
-                                    </a>
+                                <a className="btn w-100 mb-20 hover-up">
+                                    {translate("ENREGISTREZ VOTRE ENTREPRISE")}
+                                </a>
+                                <a className="btn w-100 mb-20 hover-up">
+                                    {translate("RÉFÉRENCEZ VOS PRODUITS  | ACCÈS DECOPRO")}
+                                </a>
+                                <a className="btn w-100 hover-up">
+                                    {translate("Tous les articles du mag déco")}
+                                </a>
                                 </div>
-                                <p className="mb-20 ">Secured Payment Gateways</p>
-                                <img
-                                    className=""
-                                    src="/assets/imgs/theme/payment-method.png"
-                                    alt=""
-                                />
                             </div>
                         </div>
                     </div>
@@ -200,10 +185,10 @@ const Footer = ({translate}) => {
                         </div>
                         <div className="col-xl-4 col-lg-6 col-md-6">
                             <p className="font-sm mb-0">
-                                &copy; 2021,{" "}
+                                Copyright &copy; 2000-2023,{" "}
                                 <strong className="text-brand">Nest</strong> - HTML
-                                Ecommerce Template <br />
-                                All rights reserved
+                                Distrimart SAS - <br />
+                                Déclaration CNIL n1064213
                             </p>
                         </div>
                         <div className="col-xl-4 col-lg-6 text-center d-none d-xl-block">
@@ -212,57 +197,54 @@ const Footer = ({translate}) => {
                                     src="/assets/imgs/theme/icons/phone-call.svg"
                                     alt="hotline"
                                 />
-                                <p>
-                                    1900 - 6666<span>Working 8:00 - 22:00</span>
-                                </p>
+                                <span>
+                                    +33 1 41 27 92 60
+                                </span>
                             </div>
                             <div className="hotline d-lg-inline-flex">
                                 <img
                                     src="/assets/imgs/theme/icons/phone-call.svg"
                                     alt="hotline"
                                 />
-                                <p>
-                                    1900 - 8888<span>24/7 Support Center</span>
-                                </p>
+                                <span>
+                                    fax : +33 1 47 39 89 39
+                                </span>
                             </div>
                         </div>
                         <div className="col-xl-4 col-lg-6 col-md-6 text-end d-none d-md-block">
                             <div className="mobile-social-icon">
-                                <h6>Follow Us</h6>
-                                <a href="#">
+                                <h6>{translate("Suivez-nous")}</h6>
+                                <a href="https://www.facebook.com/decofinder">
                                     <img
                                         src="/assets/imgs/theme/icons/icon-facebook-white.svg"
                                         alt=""
                                     />
                                 </a>
-                                <a href="#">
+                                <a href="https://twitter.com/decofinder">
                                     <img
                                         src="/assets/imgs/theme/icons/icon-twitter-white.svg"
                                         alt=""
                                     />
                                 </a>
-                                <a href="#">
+                                <a href="https://www.instagram.com/decofinder/">
                                     <img
                                         src="/assets/imgs/theme/icons/icon-instagram-white.svg"
                                         alt=""
                                     />
                                 </a>
-                                <a href="#">
+                                <a href="https://www.pinterest.fr/decofinder/">
                                     <img
                                         src="/assets/imgs/theme/icons/icon-pinterest-white.svg"
                                         alt=""
                                     />
                                 </a>
-                                <a href="#">
+                                <a href="https://www.youtube.com/@decofinder">
                                     <img
                                         src="/assets/imgs/theme/icons/icon-youtube-white.svg"
                                         alt=""
                                     />
                                 </a>
                             </div>
-                            <p className="font-sm">
-                                Up to 15% discount on your first subscribe
-                            </p>
                         </div>
                     </div>
                 </div>

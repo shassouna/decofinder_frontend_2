@@ -35,7 +35,6 @@ export default function Home(props) {
 
     return (
         <>
-            <IntroPopup />
 
             <div className="home-slider position-relative mb-30">
                 <div className="container">
@@ -148,13 +147,14 @@ export async function getServerSideProps (context) {
     })
     const productsNouveautesRes = await axios.get(`http://localhost:1337/api/produits?${queryProductsNouveautes}`)  
 
+    
     return {
         props: {
             ...(await serverSideTranslations(context["locale"],["home"])),
             Superuniverss : superuniversRes["data"]["data"],
             Products_Home : productsRes["data"]["data"],
             Communiques : communiquesRes["data"]["data"],
-            Products_Nouveautes : productsNouveautesRes["data"]["data"],
+            Products_Nouveautes : productsNouveautesRes["data"]["data"]
         }
     }
 }

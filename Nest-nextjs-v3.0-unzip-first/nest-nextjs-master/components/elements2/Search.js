@@ -1,53 +1,50 @@
-import { useRouter } from "next/router";
-import React, { useState } from "react";
+import { useRouter } from "next/router"
+import React, { useState } from "react"
 
-const Search = () => {
-    const [searchTerm, setSearchTerm] = useState("");
-    const router = useRouter();
+const Search = ({translate}) => {
+    
+    const [searchTerm, setSearchTerm] = useState("")
+    const router = useRouter()
 
     const handleSearch = () => {
-        console.log("click");
+
         router.push({
             pathname: "/products",
             query: {
                 search: searchTerm,
             },
-        });
-        setSearchTerm("");
-    };
+        })
+        setSearchTerm("")
+    }
 
     const handleInput = (e) => {
         if (e.key === "Enter") {
-            e.preventDefault();
-            handleSearch();
+            e.preventDefault()
+            handleSearch()
         }
-    };
+    }
     return (
         <>
             <form>
                 <select className="select-active">
-                    <option>All Categories</option>
-                    <option>Women's</option>
-                    <option>Men's</option>
-                    <option>Cellphones</option>
-                    <option>Computer</option>
-                    <option>Electronics</option>
-                    <option> Accessories</option>
-                    <option>Home & Garden</option>
-                    <option>Luggage</option>
-                    <option>Shoes</option>
-                    <option>Mother & Kids</option>
+                    <option>{translate("Tout")}</option>
+                    <option>{translate("Super univers")}</option>
+                    <option>{translate("Univers")}</option>
+                    <option>{translate("Categorie")}</option>
+                    <option>{translate("Type produit")}</option>
+                    <option>{translate("Produit")}</option>
+                    <option>{translate("Exposant")}</option>
                 </select>
                 <input
                     value={searchTerm}
                     onKeyDown={handleInput}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     type="text"
-                    placeholder="Search"
+                    placeholder={translate("Recherchez")}
                 />
             </form>
         </>
-    );
-};
+    )
+}
 
-export default Search;
+export default Search
