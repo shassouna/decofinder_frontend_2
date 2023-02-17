@@ -192,7 +192,7 @@ function Univers(props) {
     /*---------------------------------------------------Functions end---------------------------------------------------*/
 
     return (
-            <div className="container custom">
+            <div className="container custom mt-50">
                 <div className="row mb-50">
                     {/* Univers decription begin */}  
                     {             
@@ -372,17 +372,23 @@ export async function getServerSideProps (context) {
             "categories.typeprods.produits.couleur",
             "categories.typeprods.produits.motif",
             "categories.typeprods.produits.materiau",
+            "categories.typeprods.produits.images",
+            "categories.typeprods.produits.typeprod",
             "categories.produits.exposant",
             "categories.produits.style",
             "categories.produits.couleur",
             "categories.produits.motif",
             "categories.produits.materiau",
+            "categories.produits.images",
+            "categories.produits.typeprod",
             // superunivers of univers
             "superuniver.univers.categories.typeprods.produits.exposant",
             "superuniver.univers.categories.typeprods.produits.style",
             "superuniver.univers.categories.typeprods.produits.couleur",
             "superuniver.univers.categories.typeprods.produits.motif",
             "superuniver.univers.categories.typeprods.produits.materiau",
+            "superuniver.univers.categories.typeprods.produits.images",
+            "superuniver.univers.categories.typeprods.produits.typeprod",
             // images of categories
             "categories.image",
             // internationalization
@@ -392,17 +398,22 @@ export async function getServerSideProps (context) {
             "localizations.categories.typeprods.produits.couleur",
             "localizations.categories.typeprods.produits.motif",
             "localizations.categories.typeprods.produits.materiau",
+            "localizations.categories.typeprods.produits.images",
             "localizations.categories.produits.exposant",
             "localizations.categories.produits.style",
             "localizations.categories.produits.couleur",
             "localizations.categories.produits.motif",
             "localizations.categories.produits.materiau",
+            "localizations.categories.produits.images",
+            "localizations.categories.produits.typeprod",
             // superunivers of univers
             "localizations.superuniver.univers.categories.typeprods.produits.exposant",
             "localizations.superuniver.univers.categories.typeprods.produits.style",
             "localizations.superuniver.univers.categories.typeprods.produits.couleur",
             "localizations.superuniver.univers.categories.typeprods.produits.motif",
             "localizations.superuniver.univers.categories.typeprods.produits.materiau",
+            "localizations.superuniver.univers.categories.typeprods.produits.images",
+            "localizations.superuniver.univers.categories.typeprods.produits.typeprod",
             // images of categories
             "localizations.categories.image",
         ]

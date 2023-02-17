@@ -22,7 +22,7 @@ function Superunivers(props) {
     /*---------------------------------------------------Hooks end---------------------------------------------------*/
 
     return (
-        <div className="container custom">
+        <div className="container custom mt-50">
             <div className="row mb-50">
 
                 {/* Superunivers decription begin */}        

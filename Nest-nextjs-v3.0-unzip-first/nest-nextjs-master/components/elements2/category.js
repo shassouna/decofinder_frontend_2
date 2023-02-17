@@ -20,7 +20,10 @@ function category({category}) {
             </div>
             <div className="entry-content-2">
                 <h4 className="post-title mb-10">
-                    <Link href={`/c${category["id"]}/${category["attributes"]["slug"]}`}>
+                    <Link 
+                    href={`/c/${category["id"]}/${category["attributes"]["slug"]}`}
+                    as={`/c${category["id"]}/${category["attributes"]["slug"]}`}
+                    >
                         <a>{category["attributes"]["LIB"]}</a>
                     </Link>
                 </h4>
@@ -28,23 +31,28 @@ function category({category}) {
                 category["attributes"]["typeprods"]&&
                 <>
                     <div className="mb-20">
-                        { 
-                        category["attributes"]["typeprods"]["data"]
-                        .map((typeprod,index)=>(
-                            <Link href={`/p${typeprod["id"]}/${typeprod["attributes"]["slug"]}`}>
-                                <div key={typeprod["id"]}>
-                                {index+1 + " - " + typeprod["attributes"]["LIB"]}
-                                </div>
-                            </Link>
-                        ))
-                        }
+                    { 
+                    category["attributes"]["typeprods"]["data"]
+                    .map((typeprod,index)=>(
+                        <Link href={`/p${typeprod["id"]}/${typeprod["attributes"]["slug"]}`} key={typeprod["id"]}>
+                            <div key={typeprod["id"]}>
+                            {index+1 + " - " + typeprod["attributes"]["LIB"]}
+                            </div>
+                        </Link>
+                    ))
+                    }
                     </div>
-                    <a
-                        aria-label="Add To Cart"
-                        className="btn"
+                    <Link
+                    href={`/c/${category["id"]}/${category["attributes"]["slug"]}`}
+                    as={`/c${category["id"]}/${category["attributes"]["slug"]}`}
                     >
-                        Tous les produits
-                    </a>
+                        <a
+                            aria-label="Add To Cart"
+                            className="btn"
+                        >
+                            Tous les produits
+                        </a>
+                    </Link>
                 </>
                 }
             </div>

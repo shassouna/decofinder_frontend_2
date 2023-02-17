@@ -60,7 +60,7 @@ const Sidebar = ({
                     </ul>
                 </div>
                 }
-                {
+                {/* Univers of Superunivers case Univers */
                 Superunivers&&
                 <div className="sidebar-widget widget-category-2 mb-50">
                     <h5 className="section-title style-1 mb-30">{translate("A voir aussi dans") + " " + Superunivers["attributes"]["LIB"]}</h5>
@@ -68,8 +68,8 @@ const Sidebar = ({
                     {Universs_Superunivers_Univers.map(univers=>(
                         <li key={univers["id"]}>
                             <Link 
-                            href={`/c${univers["id"]}/${univers["attributes"]["slug"]}`}  
-                            as={`/c/${univers["id"]}/${univers["attributes"]["slug"]}`}                      
+                            href={`/u/${univers["id"]}/${univers["attributes"]["slug"]}`}  
+                            as={`/u${univers["id"]}/${univers["attributes"]["slug"]}`}                      
                             ><a>{univers["attributes"]["LIB"]}</a></Link>
                         </li>
                     ))}

@@ -6,6 +6,7 @@ import { useRouter } from "next/router"
 import Link from "next/link"
 // Import from React
 import React, { useEffect, useState } from "react"
+import Wishlist from "../../pages/shop-wishlist"
 
 const Header = ({
     totalCartItems,
@@ -18,8 +19,11 @@ const Header = ({
 }) => {
 
     const router = useRouter()
+
     const [isToggled, setToggled] = useState(false)
     const [scroll, setScroll] = useState(0)
+
+    const [wishlist, setWishlist] = useState([])
 
     useEffect(() => {
         document.addEventListener("scroll", () => {
@@ -28,7 +32,16 @@ const Header = ({
                 setScroll(scrollCheck)
             }
         })
-    })
+    })  
+
+    if (typeof window !== 'undefined') {
+        useEffect(()=>{
+            const wishlistLocal = JSON.parse(localStorage.getItem("wishlist"))
+            if(wishlistLocal  != null){
+                setWishlist(wishlistLocal)
+            }
+        },[localStorage.getItem("wishlist")]) 
+    }
 
     const handleToggle = () => setToggled(!isToggled)
 
@@ -196,7 +209,7 @@ const Header = ({
                                         </div>
 
                                         <div className="header-action-icon-2">
-                                            <Link href="/shop-compare">
+                                            <Link href="/new">
                                                 <a>
                                                     <span className="lable">
                                                         {translate("Nouveautés")}
@@ -207,18 +220,15 @@ const Header = ({
 
                                         <div className="header-action-icon-2">
                                             <Link href="/shop-wishlist">
-                                                <a>
-                                                    <img
-                                                        className="svgInject"
-                                                        alt="Evara"
-                                                        src="/assets/imgs/theme/icons/icon-heart.svg"
-                                                    />
+                                                <a style={{fontSize:wishlist.length>0?"40px":"40px"}}>
+                                                {wishlist.length>0 && "\u2764"}
+                                                {wishlist.length==0 && "\u2661"}
                                                 </a>
                                             </Link>
                                             <Link href="/shop-wishlist">
-                                                <a className="ml-5">
+                                                <a>
                                                     <span>
-                                                        {translate("Liste de souhaits")}
+                                                        {wishlist.length}
                                                     </span>
                                                 </a>
                                             </Link>

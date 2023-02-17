@@ -1,6 +1,5 @@
 
 // Import from components
-import IntroPopup from "./../components/elements2/IntroPopup"
 import Intro1 from "./../components/elements2/Intro1"
 import SuperuniverssSlider from "./../components/elements2/SuperuniverssSlider"
 import RelatedProducts from "./../components/elements2/RelatedProducts"

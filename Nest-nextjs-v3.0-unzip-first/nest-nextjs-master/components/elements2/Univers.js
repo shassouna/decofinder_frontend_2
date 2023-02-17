@@ -8,7 +8,10 @@ function univers({univers}) {
             className="col-xl-3 col-lg-4 col-md-6 text-center hover-up animated"
         >
             <div className="post-thumb">
-                <Link href={`/c${univers["id"]}/${univers["attributes"]["slug"]}`}>
+                <Link 
+                    href={`/u/${univers["id"]}/${univers["attributes"]["slug"]}`}
+                    as={`/u${univers["id"]}/${univers["attributes"]["slug"]}`}
+                >
                     <a>
                         <img
                             className="border-radius-15"
@@ -20,7 +23,10 @@ function univers({univers}) {
             </div>
             <div className="entry-content-2">
                 <h4 className="post-title mb-10">
-                    <Link href={`/c${univers["id"]}/${univers["attributes"]["slug"]}`}>
+                    <Link 
+                        href={`/u/${univers["id"]}/${univers["attributes"]["slug"]}`}
+                        as={`/u${univers["id"]}/${univers["attributes"]["slug"]}`}
+                    >
                         <a>{univers["attributes"]["LIB"]}</a>
                     </Link>
                 </h4>

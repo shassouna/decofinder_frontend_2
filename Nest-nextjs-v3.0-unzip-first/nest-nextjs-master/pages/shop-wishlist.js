@@ -9,11 +9,11 @@ const Wishlist = ({
     addToCart
 }) => {
     
-
     const handleCart = (product) => {
         addToCart(product)
         toast("Product added to Cart !")
     }
+    
     return (
         <>
             <Layout parent="Home" sub="Shop" subChild="Wishlist">
