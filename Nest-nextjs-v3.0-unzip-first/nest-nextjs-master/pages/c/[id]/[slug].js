@@ -326,7 +326,7 @@ function Category(props) {
     /*---------------------------------------------------Functions end---------------------------------------------------*/
 
     return (
-            <div className="container custom">
+            <div className="container custom mt-50">
                 <div className="row">
                     {/* SideBar filters begin */}
                     <div className="col-lg-3 primary-sidebar sticky-sidebar">

@@ -79,19 +79,19 @@ const SingleProduct = ({
                         <Link href={`/p${product["attributes"]["typeprod"]["data"]["id"]}/${product["attributes"]["typeprod"]["data"]["attributes"]["slug"]}`}>
                             <span className="font-small">{product["attributes"]["typeprod"]["data"]["attributes"]["LIB"]}</span>
                         </Link>
-                        {product["attributes"]["TITRE"] || product["attributes"]["TITRE"]==null?
-                        <p>{product["attributes"]["TITRE"]}</p>
+                        {!product["attributes"]["TITRE"] || product["attributes"]["TITRE"]==null?
+                        <p>{product["attributes"]["MODELES"]}</p>
                         :
-                        <br/>
+                        <p>{product["attributes"]["TITRE"]}</p>
                         }
                     </div>
                     :
                     <div className="product-rate-cover">
                         <span className="font-small">{translate("Pas de type produit")}</span>
-                        {product["attributes"]["TITRE"] || product["attributes"]["TITRE"]==null?
-                        <p>{product["attributes"]["TITRE"]}</p>
+                        {!product["attributes"]["TITRE"] || product["attributes"]["TITRE"]==null?
+                       <p>{product["attributes"]["MODELES"]}</p>
                         :
-                        <br/>
+                        <p>{product["attributes"]["TITRE"]}</p>
                         }
                     </div>
                     }
